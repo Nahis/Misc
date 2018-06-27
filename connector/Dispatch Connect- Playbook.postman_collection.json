@@ -1,0 +1,847 @@
+{
+	"info": {
+		"_postman_id": "d195addc-4308-4ed3-a71f-c1ac0871d68e",
+		"name": "Dispatch Connect: Playbook",
+		"description": "Purpose\r\n-------\r\n\r\nThe purpose of the playbook is to provide you with step by step guidelines for connecting your system with Dispatch. This playbook is divided into the following sections:\r\n\r\n* 3rd Party Contractor - Relevant if you're an enterprise with a contractor or 3rd party network\r\n* SMB - Relevant if you're an SMB product solution provider and you wish to receive jobs and send updates via the Dispatch Platform\r\n* General - General processing relevant to all use cases\r\n\r\nPlease refer to the relevant sections of the playbook as they will inform you of how to process the transactions that **you** care about. Therefore, this playbook is in every sense a \"How To\" guide and our experience has shown that if you adhere to it, you should be able to connect your system to Dispatch in a self sufficient manner. \r\n\r\nThat said, we are of course here to help you with any questions that you might have. And  it's of course possible that we haven't covered every angle. If we encounter such a case, we will endeavor to make those updates to this documentation rather than address them in scattered emails and what not. In this sense, this is a living repository which will be updated as necessary to incorporate tweaks and enhancements as they become relevant and/or necessary.\r\n\r\n\r\nConnector Hub\r\n-------------\r\n**Before proceeding any futher**, you should be reviewing our [Connector Hub documentation](https://docs.dispatch.me/connector) documentation. This resource will show you how to authenticate to the Dispatch Connect platform and includes some examples of how to send and receive data from Dispatch. \r\n\r\nThe following diagram shows a high level interaction with the Dispatch Connect endpoints:\r\n\r\n![Dispatch Connect](https://user-images.githubusercontent.com/8817368/39719546-38dab446-5242-11e8-9094-941cb1672a8f.png)\r\n\r\n\r\nGeneral Conventions\r\n-------------------\r\n* All date fields send to Dispatch should be an ISO timestamp unless expressly stated otherwise\r\n* Addresses:\r\n  * `country` is defaulted to `United States`. The only other valid value at the moment is `Canada` - which is actually the whole world if you go by \"World Series\"! We hope to start covering the World Cup soon\r\n  * `state` accepts the 2 character acronym\r\n\r\nPostman\r\n-------\r\nWe decided to document this within  Postman as the environment is very easy to work with and provides an excellent way of documenting the APIs to boot! As such there are a few important things to note:\r\n\r\n* You should download this playbook into your postman environment by clicking on the \"Run in Postman\" button on the top right\r\n* Remember to choose your development language from the Language selector to have the API sample requests render in a relevant format. That may save you some development time.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "3rd Party",
+			"description": "The scenarios described in this section are relevant to you if you're an enterprise with a contractor or 3rd party network. ",
+			"item": [
+				{
+					"name": "To Dispatch",
+					"description": "As described in the [Connector Hub documentation](https://docs.dispatch.me/connector), you can send data in literally any format to Dispatch. If you do that, then it will be necessary to map from the structure that you are sending through to a structure that Dispatch understands. This exercise is typically performed by a member of the Dispatch ProServices team.\n\nIt might be better though if we can eliminate this mapping step altogether as this will allow you to start sending things over without any further ado. To this end, this section has some standard payload structures - if you adhere to these Dispatch Connect will know how to process them automatically. If you are sending custom payloads then please skip over the rest of this section.",
+					"item": [
+						{
+							"name": "Jobs",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\r\n\t\"header\": {\r\n\t\t\"record_type\": \"job\",\r\n\t\t\"version\": \"v3\"\r\n\t},\r\n\t\"record\": {\r\n\t\t\"title\": \"Job title\",\r\n\t\t\"status\": \"offered\",\r\n\t\t\"description\": \"Some description.\\n\\n# Accepts *markdown*\",\r\n\t\t\"external_id\": \"your_enterprise_job_id\",\r\n\t\t\"address\": {\r\n\t\t\t\"street_1\": \"1213 Summer St\",\r\n\t\t\t\"street_2\": \"apt. 1\",\r\n\t\t\t\"postal_code\": \"01234\",\r\n\t\t\t\"city\": \"Boston\",\r\n\t\t\t\"state\": \"MA\"\r\n\t\t},\r\n\t\t\"service_type\": \"plumber\",\r\n\t\t\"customer\": {\r\n\t\t\t\"first_name\": \"Jane\",\r\n\t\t\t\"last_name\": \"Doe\",\r\n\t\t\t\"external_id\": \"your_enterprise_customer_id\",\r\n\t\t\t\"email\": \"email@dispatch.me\",\r\n\t\t\t\"phone_numbers\": [{\r\n\t\t\t\t\"number\": \"+15550913813\",\r\n\t\t\t\t\"primary\": true,\r\n\t\t\t\t\"type\": \"Mobile\"\r\n\t\t\t}],\r\n\t\t\t\"home_address\": {\r\n\t\t\t\t\"street_1\": \"3913 Ford Street\",\r\n\t\t\t\t\"city\": \"Revere\",\r\n\t\t\t\t\"state\": \"MA\",\r\n\t\t\t\t\"postal_code\": \"02151\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"organization\": {\r\n\t\t\t\"name\": \"Your Service Provider\",\r\n\t\t\t\"email\": \"your_service_provider@dispatch.me\",\r\n\t\t\t\"external_id\": \"your_enterprise_service_provider_id\",\r\n\t\t\t\"phone_number\": \"(555)013-0352\",\r\n\r\n\t\t\t\"address\": {\r\n\t\t\t\t\"street_1\": \"3313 Maple Avenue\",\r\n\t\t\t\t\"postal_code\": \"90731\",\r\n\t\t\t\t\"city\": \"San Pedro\",\r\n\t\t\t\t\"state\": \"CA\"\r\n\t\t\t}\r\n\t\t},\r\n\t\t\"suggested_times\": [\r\n\t\t    {\r\n                \"start_time\": \"2018-06-05T17:00:00+0000\",\r\n                \"end_time\": \"2018-06-05T19:00:00+0000\"\r\n\t\t    },\r\n\t\t    {\r\n                \"start_time\": \"2018-06-06T17:00:00+0000\",\r\n                \"end_time\": \"2018-06-06T19:00:00+0000\"\r\n\t\t    },\r\n\t\t    {\r\n                \"start_time\": \"2018-06-07T17:00:00+0000\",\r\n                \"end_time\": \"2018-06-07T17:00:00+0000\"\r\n\t\t    }\r\n\t\t]\r\n\t}\r\n}]"
+								},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "Overview\n--------\n\nWe call it a Job. You might call it a Work Order, Service Order or something else. Potato, potāto. Anyway, you will be sending these over to us.\n\nA job has the following main elements:\n\n* Job Details\n* Customer Details\n* Service Provider/Contractor Details\n\nThough we are quite forgiving, a job cannot really be a job without some basic information, so please take care to include the following details:\n\n* Customer name (preferably first and last but we'll settle with whatever you can send us)\n* Valid address (we need to know where to go!)\n* Organization email and/or phone # (and/or organization `id` if you've pre-created those)\n\nWe will not create duplicate records. Meaning if you send over the same organization or customer record more than once, the system is smart enough to detect they exist. \n\nWe'd also recommend you include a valid customer email and mobile number as that will enhance the experience. Do try to avoid invalid entries such as `jim@@abc.com` and `555123` as if you don't manage that we'll be forced to strip them before processing.\n\nOh and lastly, we'd really encourage sending over your unique IDs into the `external_id` fields for the job and organization. We might find it difficult to process updates without these.\n\nSend this payload and voila - a job will be created in Dispatch!\n\n\nSpecial Fields\n--------------\nMost of the fields in the payload should be self explanatory. But we do want to bring the following to your attention:\n\n`job` section:\n* `status` - the default mapping expects the following values:\n  * `offered` - offers the job to the service provider\n  * `accepted` - if you wish to accept on behalf of the service provider\n  * `rejected` - as above\n  * `completed` \n  * `canceled`\n* `description` - this can accept [markdown](https://dillinger.io/) formatting\n\n`suggested_times`-  This is an optional section, if you include it will offer the service provider these as \"suggested times\" that the customer has indicated are preferable.\n\n`organization` (i.e. service provider):\n* Only a single service provider record is currently supported\n* If you're pre-creating service providers only the `id` or `external_id` needs to be supplied\n  \n"
+							},
+							"response": []
+						},
+						{
+							"name": "Organizations",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n\t{\r\n\t  \"header\": {\r\n\t    \"record_type\": \"organization\",\r\n\t    \"version\": \"v3\"\r\n\t  },\r\n\t  \"record\": {\r\n\t\t  \"name\" : \"Your Service Provider\",\r\n\t\t  \"email\" : \"your_service_provider@dispatch.me\",\r\n\t\t  \"external_id\": \"your_enterprise_id\",\r\n\t\t  \"phone_number\" : \"(555)010-0352\",\r\n\t\t  \"address\": {\r\n\t\t        \"street_1\": \"3310 Maple Avenue\",\r\n\t\t        \"postal_code\": \"90731\",\r\n\t\t        \"city\": \"San Pedro\",\r\n\t\t        \"state\": \"CA\"\r\n\t\t }\r\n\t  }\r\n\t}\r\n]"
+								},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "Overview\n--------\n\nWe call it an Organization. You might call it a Service Provider, Contractor, 3rd Party, Installer or something else. Tomato, tomāto.\n\nNow the things is, you don't actually have to send these over to us separately. If you send these with the aforementioned job then we'll create them on the fly. However, sometimes it is preferred for these to be created separately in advance and if that's the case for you then you've come to the right place.\n\nAt a minimum, please ensure you provide us with the following bits of information (although the more the merrier of course):\n\n* Name\n* Valid Email and/or Phone Number\n\nIt's also really good practice to include your unique organization ID in the `external_id` attribute as then you can reference that when sending jobs over.\n\nOh and definitely the address. You see we use that to determine the time zone and if it's omitted we're forced to default to EST. So you may want to pass this so the guys in CA can sleep in a little bit.\n\nSend this payload and Bob's your contractor!"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5007f813-77a2-4493-9dd4-70c24ae848bd",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc507a1a-af78-4f9d-894f-cdd583bbda3a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "From Dispatch",
+					"description": "Overview\r\n--------\r\n\r\nIf you need to update your system based on updates made on the Dispatch platform then this section is for you! If you managed to successfully send a job to Dispatch Connect then you will be able to [sign in as a Dispatcher and Technician and work the job](https://www.screencast.com/t/uZ5DxiioftvJ).\r\n\r\nThe sections below list all the events that we think you'll need to be monitoring. If you encounter a case that you think is not covered, please reach out to us - there's a good chance we can configure it for you!\r\n\r\nAs a general rule, an event will only appear in the stream if it's something that originated from the Dispatch Platform. This means that we will not echo changes that originated from your system back to you!\r\n\r\n\r\nDesign Considerations\r\n---------------------\r\n\r\nPlease note that the structures defined in this section are our default. If you already have your own preferred structure and/or format in which you prefer to receive the data, please let us know - there's a good chance we'll be able to accomodate you.\r\n\r\nPlease be aware that we may put additional events in the stream as our product evolves. Therefore you should be careful to incorporate the following into your design:\r\n\r\n* Ignore any events that are not relevant to your use case (just [send an acknowledgement](https://docs.dispatch.me/connector/#sending-acknowledgements-to-dispatch) through)\r\n* Although we will not *change* the names of attributes in the payload, it is possible that we'll add *new* attributes to the payload. Therefore make sure that your payload consumption will not break if a new attribute starts being included.\r\n\r\n\r\nEvent Summary\r\n-------------\r\n\r\nThis section lists the events that are relevant to your use case and that can be retrieved [by polling the Connector Hub outbound endpoint](https://docs.dispatch.me/connector/#get-data-from-dispatch):\r\n\r\n* Job\r\n  * Job Accepted `job.unscheduled`\r\n  * Job Declined `job.rejected` \r\n  * Job Completed: `job.complete` (Ready for Billing)\r\n  * Job Paused: `job_paused` (e.g. No Show, Waiting for Parts)\r\n  * Job Canceled: `job.canceled`\r\n  * Job Created: `job.offered` (only necessary when the jobs do not get sent directly from your system)\r\n* Appointment\r\n  * Appointment Scheduled: `appointment.scheduled`\r\n  * Technician Enroute: `appointment.enroute`\r\n  * Appointment Started: `appointment.started`\r\n  * Appointment Complete: `appointment.complete` *(only if you need to track at the appointment level - usually sufficient to use `job.complete`)*\r\n  * Appointment Canceled: `appointment.canceled` *(only if you need to track at the appointment level - usually sufficient to use `job.canceled`)*\r\n* Survey\r\n  * Submitted by Customer: `survey.submitted`\r\n* Notes/Attachments\r\n  * Note: `note`\r\n  * Attachment: `attachment`\r\n  \r\n\r\nPayload Structure\r\n-----------------\r\n\r\nThe [Connector Hub documentation](https://docs.dispatch.me/connector/#get-data-from-dispatch) describes the overall payload structure and how to poll for them and to send through acknowledgement. The two elements from the payload that we care about for performing the processing mentioned in this section are the `Message/Request/Type` and `Message/Request/Payload`.\r\n\r\nTo be relevant for the processing mentioned in this section, ensure that the `Type` has a value of `put_data`. If it does then extract the `Payload` which will have the following basic payload structure:\r\n\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"some_event\": {\r\n                        \"id\": 30462\r\n                        \"external_ids\": [\r\n                            \"account.999.source:your_system_id\"\r\n                        ]\r\n                        ...\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n\r\n\r\nThe following basics should be used for all event processing:\r\n* `some_event` - Use this for your branch logic as described in the sections below. This can also be used to determine status.\r\n* `external_id` - This is the Enterprise's record ID. This will appear in an array element.\r\n* `updated_at` - Use this to mark the time the event occured in your system",
+					"item": [
+						{
+							"name": "Job Related Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for processing *Job* events. These events are wrapped in a `job` element. \r\n\r\nThese are the cases that should be monitored:\r\n* Accepted\r\n* Rejected\r\n* Completed (Ready for Billing)\r\n* Paused  (e.g No Show, Waiting for Parts)\r\n* Canceled\r\n* Created (only if you are not sending jobs directly to Dispatch)\r\n\r\nJob events have the following basic payload structure:\r\n\r\n```\r\n\t\"Payload\": {\r\n\t    \"Actions\": [\r\n\t        {\r\n\t            \"ID\": null,\r\n\t            \"Put\": {\r\n\t                \"job\": {\r\n\t                    \"id\": 30462,\r\n\t                    \"status\": \"some_status\",\r\n\t                    \"status_message\": \"some message\",\r\n\t                    \"updated_at\": \"2018-05-18T10:05:46+0000\",\r\n\t                    \"external_ids\": [\r\n\t                        \"namespace:your_system_id\"\r\n\t                    ]\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    ]\r\n\t}\r\n```\t\r\n\r\n\r\nEvent Processing\r\n================\r\n\r\nJob Accepted\r\n------------\r\n\r\n* Status: `unscheduled`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nJob Rejected\r\n------------\r\n\r\n* Status: `rejected`\r\n* Additional processing recommended:\r\n  * Retrieve the reject reason from the `status_message`\r\n\r\nJob Completed\r\n-------------\r\n\r\n* Status: `complete`\r\n* Additional processing recommended:\r\n  * Retrieve the complete reason from the `status_message`\r\n\r\nThis event is generated in the following circumstances:\r\n  * By completing an appointment using the \"Ready for Billing\" reason (and there are no other open appointment on the job)\r\n  * By completing a job directly via the Dispatch Manage Portal\r\n\r\nTherefore:\r\n  * If all you need to monitor is whether a job is complete or not then you should process this event\r\n  * If you want to track granularity at the appointment level then you should also process the appointment `complete` event (not required in most cases)\r\n\r\nNote:\r\n  * A follow up appointment can be created even after a job has been completed. If this happens another appointment `scheduled` event will be generated\r\n\r\nJob Paused\r\n----------\r\n\r\n* Status: `paused`\r\n* Additional processing recommended:\r\n  * Retrieve the pause reason from the `status_message`\r\n\r\nThis event is generated in the following circumstances:\r\n  * By completing an appointment as a \"no show\"\r\n  * By completing an appointment as \"waiting for parts\"\r\n  * Other pause events configured for your instance\r\n\r\n\r\nJob Canceled\r\n------------\r\n\r\n* Status: `canceled`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nThis event is emitted when a job is canceled. Therefore:\r\n  * If all you need to monitor is whether a job is canceled or not then you should subscribe to this event\r\n  * If you want to track granularity at the appointment level then you should also subscribe to the appointment `canceled` event (not required in most cases)\r\n\r\n\r\nJob Created\r\n-----------\r\n\r\nSometimes jobs don't originate from you sending them directly to Dispatch. For example, if customers use a web page for requesting service those jobs could be sent to Dispatch. If you want to subscribe so that you can create them in your system then read on.\r\n\r\nThis event is a little beefier than other events as it contains the details of the job which you presumably want to copy to your system.\r\n\r\n* Status: `offered`\r\n* Additional processing recommended:\r\n  * None\r\n\r\n```\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"job\": {\r\n                        \"id\": 30462,\r\n                        \"organization_id\": 11776,\r\n                        \"title\": \" Claim Details 206\",\r\n                        \"status\": \"offered\",\r\n                        \"status_message\": \"\",\r\n                        \"description\": \"some description\",\r\n                        \"updated_at\": \"2018-05-18T10:05:46+0000\",\r\n                        \"service_type\": \"air conditioning\",\r\n                        \"service_fee\": 0,\r\n                        \"address\": {\r\n                            \"street_1\": \"1755 Ridgeview Dr\",\r\n                            \"street_2\": \"\",\r\n                            \"postal_code\": \"76012\",\r\n                            \"city\": \"Arlington\",\r\n                            \"state\": \"TX\",\r\n                            \"country\": \"United States\",\r\n                            \"timezone\": \"America/Chicago\",\r\n                            \"latitude\": 32.7633905735029,\r\n                            \"longitude\": -97.1352367468659\r\n                        },\r\n                        \"external_ids\": [\r\n                            \"your_system_id\"\r\n                        ],\r\n                        \"customer\": {\r\n                            \"first_name\": \"James\",\r\n                            \"last_name\": \"Dodd\",\r\n                            \"company_name\": \"\",\r\n                            \"email\": \"devs+dodd@dispatch.me\",\r\n                            \"phone_number\": \"+15559803824\"\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "Appointment Related Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for processing *Appointment* events. These events are wrapped in an `appointment` element.\r\n\r\nThese are the cases that should be monitored:\r\n* Scheduled\r\n* Enroute\r\n* Started\r\n* Completed*\r\n* Canceled*\r\n\r\n*Only if appointment granularity is required, otherwise you should track these with the corresponding job events.\r\n\r\nAppointment events have the following basic payload structure:\r\n\r\n```    \r\n\t\"Payload\": {\r\n\t    \"Actions\": [\r\n\t        {\r\n\t            \"ID\": null,\r\n\t            \"Put\": {\r\n\t                \"appointment\": {\r\n\t                    \"id\": 18663,\r\n\t                    \"status\": \"some_status\",\r\n\t                    \"job_id\": 30463,\r\n\t                    \"updated_at\": \"2018-05-18T10:08:38+0000\",\r\n\t                    \"start_time\": \"2018-05-19T15:00:00+0000\",\r\n\t                    \"end_time\": \"2018-05-19T16:00:00+0000\",\r\n                        \"job\": {\r\n                            \"external_ids\": [\r\n                                \"namespace:your_system_id\"\r\n                            ]\r\n                        }\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    ]\r\n\t}\r\n```    \r\n\r\nEvent Processing\r\n================\r\n\r\nAppointment Scheduled\r\n---------------------\r\n\r\n* Status: `scheduled`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Enroute\r\n-------------------\r\n\r\n* Status: `enroute`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Started\r\n-------------------\r\n\r\n* Status: `started`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Completed\r\n---------------------\r\n\r\n* Status: `complete`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Canceled\r\n--------------------\r\n\r\n* Status: `canceled`\r\n* Additional processing recommended:\r\n  * None"
+							},
+							"response": []
+						},
+						{
+							"name": "Notes & Attachment Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for consuming *notes* and *attachment* events. These events are wrapped in an `attachment` element.\r\n\r\n*Please note:* The payloads for both of these events are very similar. The only difference is that a note will have a `description` attribute and an attachment will have a `file_url` element as you'll see in the examples below. Use this for your branch logic.\r\n\r\nEvent Processing\r\n================\r\n\r\nNotes\r\n-----\r\n\r\nNote events will have the following payload structure:\r\n\r\n```\r\n\t{\r\n\t    \"Payload\": {\r\n\t        \"Actions\": [\r\n\t            {\r\n\t                \"ID\": null,\r\n\t                \"Put\": {\r\n\t                    \"attachment\": {\r\n\t                        \"id\": 3675,\r\n\t                        \"entity_type\": \"Job\",\r\n\t                        \"entity_id\": 30463,\r\n\t                        \"description\": \"some note\",\r\n\t                        \"updated_at\": \"2018-05-18T10:14:51+0000\",\r\n\t\t\t\t\t\t\t\"job\": {\r\n\t                            \"external_ids\": [\r\n\t                                \"namespace:your_system_id\"\r\n\t                            ]\r\n\t                        }\t                        \r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        ]\r\n\t    }\r\n\t}\r\n```\r\n\r\nThere's nothing more to it. Just pick up the `description` and process to your system.\r\n\r\nAttachment\r\n----------\r\n\r\nAttachment events will have the following payload structure:\r\n\r\n```\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"attachment\": {\r\n                        \"id\": 3676,\r\n                        \"entity_type\": \"Job\",\r\n                        \"entity_id\": 30463,\r\n                        \"file_token\": \"37f3cf22-f1c5-437c-a078-8608e25a0b2b\",\r\n                        \"name\": \"DispatchConnect.png\",\r\n                        \"updated_at\": \"2018-05-18T10:15:49+0000\",\r\n\t\t\t\t\t\t\"job\": {\r\n                            \"external_ids\": [\r\n                                \"namespace:your_system_id\"\r\n                            ]\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n```\r\n\r\nThe attachment is accessed via the `file_token` attribute. When opening this should be prepended with either `https://files-api/v1/datafiles/` (production) or `https://files-api-sandbox/v1/datafiles/` (sandbox)."
+							},
+							"response": []
+						},
+						{
+							"name": "Survey Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for processing *Survey* events. These events are wrapped in an `surveyresponse` element.\r\n\r\nEvent Processing\r\n================\r\n\r\nSurvey Submitted\r\n----------------\r\n\r\nSurvey events will have the following payload structure:\r\n\r\n```\r\n\t{\r\n\t    \"Payload\": {\r\n\t        \"Actions\": [\r\n\t            {\r\n\t                \"ID\": null,\r\n\t                \"Put\": {\r\n\t                    \"surveyresponse\": {\r\n\t                        \"account_message\": \"Average\",\r\n\t                        \"account_rating\": 3,\r\n\t                        \"id\": 4361,\r\n\t                        \"job_id\": 30459,\r\n\t                        \"message\": \"Great!\",\r\n\t                        \"rating\": 5,\r\n\t                        \"updated_at\": \"2018-05-18T10:57:10+0000\",\r\n\t\t\t\t\t\t\t\"job\": {\r\n\t                            \"external_ids\": [\r\n\t                                \"namespace:your_system_id\"\r\n\t                            ]\r\n\t                        }\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        ]\r\n\t    }\r\n\t}\r\n```\r\n\r\n\r\nThe survey `message` is broken up as follows:\r\n\r\n* Text in [ ] are the \"Tell us why\" reasons\r\n* The remainder are the \"additional comments\"\r\n\r\n\r\n"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ce1b102a-29ae-4690-897f-6a388cd194b0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cc04b65-241a-46e6-8f1e-dae6cfc535b6",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7f282b0f-a36e-4ad9-981d-888729fbd620",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "7fdfe78e-d992-4928-84cb-a3b70f24d401",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "W2",
+			"description": "The scenarios described in this section are relevant to you if you're an enterprise with an internal workforce (W2).\n\nThe W2 connector requirements are similar to those of the 3rd Party. The only general differences are in the following areas:\n\n**To Dispatch**\n\n* Syncing of employee records - as an internal workforce is maintained, these need to be synced to Dispatch (create/update)\n* Scheduling to an employee - in the W2 use case, you are often scheduling work directly to an employee from your source system. To accomodate, the job needs to include the appointment and assignment details. You should be able to schedule, reschedule, assign, re-assign, un-assign as necessary.\n\n\n**From Dispatch**\n\n* Contractors have the luxury of determining whether they want to take on the work sent their way. As such, there is typically an \"accept\" or \"decline\" option available. In the W2 use case not so much... Employees need to do the work that is sent their way. As such the aforementioned options are normally skipped and a job is immediately \"scheduled\" once it hits Dispatch\n\n\n\nThe above is of course \"typical\". Your use case may vary and if so we'd love to hear how so please reach out.\n\nIn order not to duplicate the documentation, we will only be documenting what is different to the 3rd party use case in this section. Where the use case is the same, we'll refer you to the corresponding 3rd party documentation.\n\n",
+			"item": [
+				{
+					"name": "To Dispatch",
+					"description": "As described in the [Connector Hub documentation](https://docs.dispatch.me/connector), you can send data in literally any format to Dispatch. If you do that, then it will be necessary to map from the structure that you are sending through to a structure that Dispatch understands. This exercise is typically performed by a member of the Dispatch ProServices team.\n\nIt might be better though if we can eliminate this mapping step altogether as this will allow you to start sending things over without any further ado. To this end, this section has some standard payload structures - if you adhere to these Dispatch Connect will know how to process them automatically. If you are sending custom payloads then please skip over the rest of this section.",
+					"item": [
+						{
+							"name": "Organizations",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n\t{\r\n\t  \"header\": {\r\n\t    \"record_type\": \"organization\",\r\n\t    \"version\": \"v3\"\r\n\t  },\r\n\t  \"record\": {\r\n\t\t  \"name\" : \"Your Service Provider\",\r\n\t\t  \"email\" : \"your_service_provider@dispatch.me\",\r\n\t\t  \"external_id\": \"your_enterprise_id\",\r\n\t\t  \"phone_number\" : \"(555)010-0352\",\r\n\t\t  \"address\": {\r\n\t\t        \"street_1\": \"3310 Maple Avenue\",\r\n\t\t        \"postal_code\": \"90731\",\r\n\t\t        \"city\": \"San Pedro\",\r\n\t\t        \"state\": \"CA\"\r\n\t\t }\r\n\t  }\r\n\t}\r\n]"
+								},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "Overview\n--------\n\nWe call it an Organization. You might call it a Franchise, Location, Office or something else. Tomato, tomāto.\n\nNow the things is, you don't actually have to send these over to us separately. If you send these with the aforementioned job then we'll create them on the fly. However, in a typical W2 use case these are set up in advance and this section will tell you how to do just that.\n\nAt a minimum, please ensure you provide us with the following bits of information (although the more the merrier of course):\n\n* Name\n* Valid Email and/or Phone Number\n\nIt's also really good practice to include your unique organization ID in the `external_id` attribute as then you can reference that when sending jobs over.\n\nOh and definitely the address. You see we use that to determine the time zone and if it's omitted we're forced to default to EST. So you may want to pass this so the guys in CA can sleep in a little bit."
+							},
+							"response": []
+						},
+						{
+							"name": "Users",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\r\n\t\"header\": {\r\n\t\t\"record_type\": \"user\",\r\n\t\t\"version\": \"v3\"\r\n\t},\r\n\t\"record\": {\r\n\t\t\"external_id\": \"your_userid\",\r\n\t\t\"first_name\": \"John\",\r\n\t\t\"last_name\": \"Doe\",\r\n\t\t\"roles\": [\r\n\t\t\t\"dispatcher\",\r\n\t\t\t\"technician\"\r\n\t\t],\r\n\t\t\"phone_number\": \"(555) 122-1912\",\r\n\t\t\"email\": \"devs+johndoe@dispatch.me\",\r\n\t\t\"external_organization_id\": \"your_enterprise_id\"\r\n\t}\r\n}]"
+								},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "Overview\n--------\n\nWe call it a User. You might call it an Employee, Tech or something else. \n\nIf you maintain these users in your system of record you are going to want to keep them synchronized with Dispatch and this section will tell you how to do just that.\n\nAt a minimum, please ensure you provide us with the following bits of information (although the more the merrier of course):\n\n* First and Last Name\n* Valid Email and/or Phone Number\n* `external_organization_id` to link it back the organization\n* Roles - either `dispatcher` (someone who can see other peoples jobs), `technician` (someone who can only see/work jobs assigned to them) or both\n\nIt's also really good practice to include your unique user ID in the `external_id` attribute as then you can reference that when sending jobs over."
+							},
+							"response": []
+						},
+						{
+							"name": "Jobs",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[{\r\n\t\t\"header\": {\r\n\t\t\t\"record_type\": \"job\",\r\n\t\t\t\"version\": \"v3\"\r\n\t\t},\r\n\t\t\"record\": {\r\n\t\t\t\"title\": \"Job title\",\r\n\t\t\t\"status\": \"offered\",\r\n\t\t\t\"description\": \"Some description.\\n\\n# Accepts *markdown*\",\r\n\t\t\t\"external_id\": \"your_enterprise_job_id\",\r\n\t\t\t\"address\": {\r\n\t\t\t\t\"street_1\": \"1213 Summer St\",\r\n\t\t\t\t\"street_2\": \"apt. 1\",\r\n\t\t\t\t\"postal_code\": \"01234\",\r\n\t\t\t\t\"city\": \"Boston\",\r\n\t\t\t\t\"state\": \"MA\"\r\n\t\t\t},\r\n\t\t\t\"service_type\": \"plumber\",\r\n\t\t\t\"customer\": {\r\n\t\t\t\t\"first_name\": \"Jane\",\r\n\t\t\t\t\"last_name\": \"Doe\",\r\n\t\t\t\t\"external_id\": \"your_enterprise_customer_id\",\r\n\t\t\t\t\"email\": \"email@dispatch.me\",\r\n\t\t\t\t\"phone_numbers\": [{\r\n\t\t\t\t\t\"number\": \"+15550913813\",\r\n\t\t\t\t\t\"primary\": true,\r\n\t\t\t\t\t\"type\": \"Mobile\"\r\n\t\t\t\t}],\r\n\t\t\t\t\"home_address\": {\r\n\t\t\t\t\t\"street_1\": \"3913 Ford Street\",\r\n\t\t\t\t\t\"city\": \"Revere\",\r\n\t\t\t\t\t\"state\": \"MA\",\r\n\t\t\t\t\t\"postal_code\": \"02151\"\r\n\t\t\t\t}\r\n\t\t\t},\r\n\t\t\t\"organization\": {\r\n\t\t\t\t\"name\": \"Your Service Provider\",\r\n\t\t\t\t\"email\": \"your_service_provider@dispatch.me\",\r\n\t\t\t\t\"external_id\": \"your_enterprise_service_provider_id\",\r\n\t\t\t\t\"phone_number\": \"(555)013-0352\",\r\n\r\n\t\t\t\t\"address\": {\r\n\t\t\t\t\t\"street_1\": \"3313 Maple Avenue\",\r\n\t\t\t\t\t\"postal_code\": \"90731\",\r\n\t\t\t\t\t\"city\": \"San Pedro\",\r\n\t\t\t\t\t\"state\": \"CA\"\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t},\r\n\t{\r\n\t\t\"header\": {\r\n\t\t\t\"record_type\": \"appointment\",\r\n\t\t\t\"version\": \"v3\"\r\n\t\t},\r\n\t\t\"record\": {\r\n\t\t\t\"external_id\": \"your_enterprise_job_id\",\r\n\t\t\t\"time\": \"2018-06-13T22:00:00.000Z\",\r\n\t\t\t\"status\": \"scheduled\",\r\n\t\t\t\"duration\": 1600,\r\n\t\t\t\"external_user_id\": \"your_user_id\",\r\n\t\t\t\"external_job_id\": \"your_enterprise_job_id\"\r\n\t\t}\r\n\t}\r\n]"
+								},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "Overview\n--------\n\nWe call it a Job. You might call it a Work Order, Service Order or something else. Potato, potāto. Anyway, you will be sending these over to us.\n\nA job has the following main elements:\n\n* Job Details\n* Customer Details\n* Service Provider/Contractor Details\n* Appointment and assignment Details\n\nThough we are quite forgiving, a job cannot really be a job without some basic information, so please take care to include the following details:\n\n* Customer name (preferably first and last but we'll settle with whatever you can send us)\n* Valid address (we need to know where to go!)\n* Organization email and/or phone # (and/or organization `id` if you've pre-created those)\n\nWe will not create duplicate records. Meaning if you send over the same organization or customer record more than once, the system is smart enough to detect they exist. This therefore allows you, for example, to change the appointment time, assign and re-assign by just changing those values when sending the payload over.\n\nWe'd also recommend you include a valid customer email and mobile number as that will enhance the experience. Do try to avoid invalid entries such as `jim@@abc.com` and `555123` as if you don't manage that we'll be forced to strip them before processing.\n\nOh and lastly, we'd really encourage sending over your unique IDs into the `external_id` fields for the job, appointment, user and organization. We might find it difficult to process updates without these.\n\nSend this payload and voila - a job will be created in Dispatch!\n\n\nSpecial Fields\n--------------\nMost of the fields in the payload should be self explanatory. But we do want to bring the following to your attention:\n\n`job` section:\n* `status` - the default mapping expects the following values:\n  * `offered` - offers the job to the service provider\n  * `accepted` - if you wish to accept on behalf of the service provider\n  * `rejected` - as above\n  * `completed` \n  * `canceled`\n* `description` - this can accept [markdown](https://dillinger.io/) formatting\n\n`organization` (i.e. service provider):\n* Only a single service provider record is currently supported\n* If you're pre-creating service providers only the `id` or `external_id` needs to be supplied\n  \n`appointment`\n* `time` - indicates the start window for the appointment (i.e. the earliest start time for the appointment window)\n* `duration` - in seconds. The end time calculated from adding duration to the start time indicates the latest start time for the appointment window\n* `status` - you generally want to set this to a value of `scheduled`\n* If you have a single appointment to job then just set `external_id` to `external_job_id` to the same value\n* `external_user_id` if you wish to assign or re-assign this should match the external ID you sent on the user record."
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "5007f813-77a2-4493-9dd4-70c24ae848bd",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc507a1a-af78-4f9d-894f-cdd583bbda3a",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "From Dispatch",
+					"description": "Overview\r\n--------\r\n\r\nIf you need to update your system based on updates made on the Dispatch platform then this section is for you! If you managed to successfully send a job to Dispatch Connect then you will be able to [sign in as a Dispatcher and Technician and work the job](https://www.screencast.com/t/uZ5DxiioftvJ).\r\n\r\nThe sections below list all the events that we think you'll need to be monitoring. If you encounter a case that you think is not covered, please reach out to us - there's a good chance we can configure it for you!\r\n\r\nAs a general rule, an event will only appear in the stream if it's something that originated from the Dispatch Platform. This means that we will not echo changes that originated from your system back to you!\r\n\r\n\r\nDesign Considerations\r\n---------------------\r\n\r\nPlease note that the structures defined in this section are our default. If you already have your own preferred structure and/or format in which you prefer to receive the data, please let us know - there's a good chance we'll be able to accomodate you.\r\n\r\nPlease be aware that we may put additional events in the stream as our product evolves. Therefore you should be careful to incorporate the following into your design:\r\n\r\n* Ignore any events that are not relevant to your use case (just [send an acknowledgement](https://docs.dispatch.me/connector/#sending-acknowledgements-to-dispatch) through)\r\n* Although we will not *change* the names of attributes in the payload, it is possible that we'll add *new* attributes to the payload. Therefore make sure that your payload consumption will not break if a new attribute starts being included.\r\n\r\n\r\nEvent Summary\r\n-------------\r\n\r\nThis section lists the events that are relevant to your use case and that can be retrieved [by polling the Connector Hub outbound endpoint](https://docs.dispatch.me/connector/#get-data-from-dispatch):\r\n\r\n* Job\r\n  * Job Completed: `job.complete` (Ready for Billing)\r\n  * Job Paused: `job_paused` (e.g. No Show, Waiting for Parts)\r\n  * Job Canceled: `job.canceled`\r\n  * Job Created: `job.offered` (only necessary when the jobs do not get sent directly from your system)\r\n* Appointment\r\n  * Appointment Scheduled: `appointment.scheduled`\r\n  * Technician Enroute: `appointment.enroute`\r\n  * Appointment Started: `appointment.started`\r\n  * Appointment Complete: `appointment.complete` *(only if you need to track at the appointment level - usually sufficient to use `job.complete`)*\r\n  * Appointment Canceled: `appointment.canceled` *(only if you need to track at the appointment level - usually sufficient to use `job.canceled`)*\r\n* Survey\r\n  * Submitted by Customer: `survey.submitted`\r\n* Notes/Attachments\r\n  * Note: `note`\r\n  * Attachment: `attachment`\r\n  \r\n\r\nPayload Structure\r\n-----------------\r\n\r\nThe [Connector Hub documentation](https://docs.dispatch.me/connector/#get-data-from-dispatch) describes the overall payload structure and how to poll for them and to send through acknowledgement. The two elements from the payload that we care about for performing the processing mentioned in this section are the `Message/Request/Type` and `Message/Request/Payload`.\r\n\r\nTo be relevant for the processing mentioned in this section, ensure that the `Type` has a value of `put_data`. If it does then extract the `Payload` which will have the following basic payload structure:\r\n\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"some_event\": {\r\n                        \"id\": 30462\r\n                        \"external_ids\": [\r\n                            \"account.999.source:your_system_id\"\r\n                        ]\r\n                        ...\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n\r\n\r\nThe following basics should be used for all event processing:\r\n* `some_event` - Use this for your branch logic as described in the sections below. This can also be used to determine status.\r\n* `external_id` - This is the Enterprise's record ID. This will appear in an array element.\r\n* `updated_at` - Use this to mark the time the event occured in your system",
+					"item": [
+						{
+							"name": "Job Related Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for processing *Job* events. These events are wrapped in a `job` element. \r\n\r\nThese are the cases that should be monitored:\r\n* Completed (Ready for Billing)\r\n* Paused  (e.g No Show, Waiting for Parts)\r\n* Canceled\r\n* Created (only if you are not sending jobs directly to Dispatch)\r\n\r\nJob events have the following basic payload structure:\r\n\r\n```\r\n\t\"Payload\": {\r\n\t    \"Actions\": [\r\n\t        {\r\n\t            \"ID\": null,\r\n\t            \"Put\": {\r\n\t                \"job\": {\r\n\t                    \"id\": 30462,\r\n\t                    \"status\": \"some_status\",\r\n\t                    \"status_message\": \"some message\",\r\n\t                    \"updated_at\": \"2018-05-18T10:05:46+0000\",\r\n\t                    \"external_ids\": [\r\n\t                        \"namespace:your_system_id\"\r\n\t                    ]\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    ]\r\n\t}\r\n```\t\r\n\r\n\r\nEvent Processing\r\n================\r\n\r\nJob Completed\r\n-------------\r\n\r\n* Status: `complete`\r\n* Additional processing recommended:\r\n  * Retrieve the complete reason from the `status_message`\r\n\r\nThis event is generated in the following circumstances:\r\n  * By completing an appointment using the \"Ready for Billing\" reason (and there are no other open appointment on the job)\r\n  * By completing a job directly via the Dispatch Manage Portal\r\n\r\nTherefore:\r\n  * If all you need to monitor is whether a job is complete or not then you should process this event\r\n  * If you want to track granularity at the appointment level then you should also process the appointment `complete` event (not required in most cases)\r\n\r\nNote:\r\n  * A follow up appointment can be created even after a job has been completed. If this happens another appointment `scheduled` event will be generated\r\n\r\nJob Paused\r\n----------\r\n\r\n* Status: `paused`\r\n* Additional processing recommended:\r\n  * Retrieve the pause reason from the `status_message`\r\n\r\nThis event is generated in the following circumstances:\r\n  * By completing an appointment as a \"no show\"\r\n  * By completing an appointment as \"waiting for parts\"\r\n  * Other pause events configured for your instance\r\n\r\n\r\nJob Canceled\r\n------------\r\n\r\n* Status: `canceled`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nThis event is emitted when a job is canceled. Therefore:\r\n  * If all you need to monitor is whether a job is canceled or not then you should subscribe to this event\r\n  * If you want to track granularity at the appointment level then you should also subscribe to the appointment `canceled` event (not required in most cases)\r\n\r\n\r\nJob Created\r\n-----------\r\n\r\nSometimes jobs don't originate from you sending them directly to Dispatch. For example, if customers use a web page for requesting service those jobs could be sent to Dispatch. If you want to subscribe so that you can create them in your system then read on.\r\n\r\nThis event is a little beefier than other events as it contains the details of the job which you presumably want to copy to your system.\r\n\r\n* Status: `offered`\r\n* Additional processing recommended:\r\n  * None\r\n\r\n```\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"job\": {\r\n                        \"id\": 30462,\r\n                        \"organization_id\": 11776,\r\n                        \"title\": \" Claim Details 206\",\r\n                        \"status\": \"offered\",\r\n                        \"status_message\": \"\",\r\n                        \"description\": \"some description\",\r\n                        \"updated_at\": \"2018-05-18T10:05:46+0000\",\r\n                        \"service_type\": \"air conditioning\",\r\n                        \"service_fee\": 0,\r\n                        \"address\": {\r\n                            \"street_1\": \"1755 Ridgeview Dr\",\r\n                            \"street_2\": \"\",\r\n                            \"postal_code\": \"76012\",\r\n                            \"city\": \"Arlington\",\r\n                            \"state\": \"TX\",\r\n                            \"country\": \"United States\",\r\n                            \"timezone\": \"America/Chicago\",\r\n                            \"latitude\": 32.7633905735029,\r\n                            \"longitude\": -97.1352367468659\r\n                        },\r\n                        \"external_ids\": [\r\n                            \"your_system_id\"\r\n                        ],\r\n                        \"customer\": {\r\n                            \"first_name\": \"James\",\r\n                            \"last_name\": \"Dodd\",\r\n                            \"company_name\": \"\",\r\n                            \"email\": \"devs+dodd@dispatch.me\",\r\n                            \"phone_number\": \"+15559803824\"\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n```"
+							},
+							"response": []
+						},
+						{
+							"name": "Appointment Related Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for processing *Appointment* events. These events are wrapped in an `appointment` element.\r\n\r\nThese are the cases that should be monitored:\r\n* Scheduled\r\n* Enroute\r\n* Started\r\n* Completed*\r\n* Canceled*\r\n\r\n*Only if appointment granularity is required, otherwise you should track these with the corresponding job events.\r\n\r\nAppointment events have the following basic payload structure:\r\n\r\n```    \r\n\t\"Payload\": {\r\n\t    \"Actions\": [\r\n\t        {\r\n\t            \"ID\": null,\r\n\t            \"Put\": {\r\n\t                \"appointment\": {\r\n\t                    \"id\": 18663,\r\n\t                    \"status\": \"some_status\",\r\n\t                    \"job_id\": 30463,\r\n\t                    \"updated_at\": \"2018-05-18T10:08:38+0000\",\r\n\t                    \"start_time\": \"2018-05-19T15:00:00+0000\",\r\n\t                    \"end_time\": \"2018-05-19T16:00:00+0000\",\r\n                        \"job\": {\r\n                            \"external_ids\": [\r\n                                \"namespace:your_system_id\"\r\n                            ]\r\n                        }\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    ]\r\n\t}\r\n```    \r\n\r\nEvent Processing\r\n================\r\n\r\nAppointment Scheduled\r\n---------------------\r\n\r\n* Status: `scheduled`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Enroute\r\n-------------------\r\n\r\n* Status: `enroute`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Started\r\n-------------------\r\n\r\n* Status: `started`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Completed\r\n---------------------\r\n\r\n* Status: `complete`\r\n* Additional processing recommended:\r\n  * None\r\n\r\nAppointment Canceled\r\n--------------------\r\n\r\n* Status: `canceled`\r\n* Additional processing recommended:\r\n  * None"
+							},
+							"response": []
+						},
+						{
+							"name": "Notes & Attachment Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for consuming *notes* and *attachment* events. These events are wrapped in an `attachment` element.\r\n\r\n*Please note:* The payloads for both of these events are very similar. The only difference is that a note will have a `description` attribute and an attachment will have a `file_url` element as you'll see in the examples below. Use this for your branch logic.\r\n\r\nEvent Processing\r\n================\r\n\r\nNotes\r\n-----\r\n\r\nNote events will have the following payload structure:\r\n\r\n```\r\n\t{\r\n\t    \"Payload\": {\r\n\t        \"Actions\": [\r\n\t            {\r\n\t                \"ID\": null,\r\n\t                \"Put\": {\r\n\t                    \"attachment\": {\r\n\t                        \"id\": 3675,\r\n\t                        \"entity_type\": \"Job\",\r\n\t                        \"entity_id\": 30463,\r\n\t                        \"description\": \"some note\",\r\n\t                        \"updated_at\": \"2018-05-18T10:14:51+0000\",\r\n\t\t\t\t\t\t\t\"job\": {\r\n\t                            \"external_ids\": [\r\n\t                                \"namespace:your_system_id\"\r\n\t                            ]\r\n\t                        }\t                        \r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        ]\r\n\t    }\r\n\t}\r\n```\r\n\r\nThere's nothing more to it. Just pick up the `description` and process to your system.\r\n\r\nAttachment\r\n----------\r\n\r\nAttachment events will have the following payload structure:\r\n\r\n```\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"attachment\": {\r\n                        \"id\": 3676,\r\n                        \"entity_type\": \"Job\",\r\n                        \"entity_id\": 30463,\r\n                        \"file_token\": \"37f3cf22-f1c5-437c-a078-8608e25a0b2b\",\r\n                        \"name\": \"DispatchConnect.png\",\r\n                        \"updated_at\": \"2018-05-18T10:15:49+0000\",\r\n\t\t\t\t\t\t\"job\": {\r\n                            \"external_ids\": [\r\n                                \"namespace:your_system_id\"\r\n                            ]\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n```\r\n\r\nThe attachment is accessed via the `file_token` attribute. When opening this should be prepended with either `https://files-api/v1/datafiles/` (production) or `https://files-api-sandbox/v1/datafiles/` (sandbox)."
+							},
+							"response": []
+						},
+						{
+							"name": "Survey Events",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nThis describes the use cases for processing *Survey* events. These events are wrapped in an `surveyresponse` element.\r\n\r\nEvent Processing\r\n================\r\n\r\nSurvey Submitted\r\n----------------\r\n\r\nSurvey events will have the following payload structure:\r\n\r\n```\r\n\t{\r\n\t    \"Payload\": {\r\n\t        \"Actions\": [\r\n\t            {\r\n\t                \"ID\": null,\r\n\t                \"Put\": {\r\n\t                    \"surveyresponse\": {\r\n\t                        \"account_message\": \"Average\",\r\n\t                        \"account_rating\": 3,\r\n\t                        \"id\": 4361,\r\n\t                        \"job_id\": 30459,\r\n\t                        \"message\": \"Great!\",\r\n\t                        \"rating\": 5,\r\n\t                        \"updated_at\": \"2018-05-18T10:57:10+0000\",\r\n\t\t\t\t\t\t\t\"job\": {\r\n\t                            \"external_ids\": [\r\n\t                                \"namespace:your_system_id\"\r\n\t                            ]\r\n\t                        }\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        ]\r\n\t    }\r\n\t}\r\n```\r\n\r\n\r\nThe survey `message` is broken up as follows:\r\n\r\n* Text in [ ] are the \"Tell us why\" reasons\r\n* The remainder are the \"additional comments\"\r\n\r\n\r\n"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ce1b102a-29ae-4690-897f-6a388cd194b0",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cc04b65-241a-46e6-8f1e-dae6cfc535b6",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "93ad9f98-e558-47eb-aeab-7db4c40ed85f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "85edd22c-3ae8-4ba2-8aeb-abf05367ca54",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "SMB",
+			"description": "The scenarios in this section are relevant to you if you're an SMB product solution provider and you wish to receive jobs and send updates via the Dispatch Platform.\n\nThe general standard flow for this use case is as follows:\n\n1. Enterprise sends a job to Dispatch\n2. You poll the connector to pick this job and process into your system\n3. You send through updates which typically include :\n\t* Milestone status e.g. accept, scheduled, complete\n\t* Notes\n\nThe exception flow for this use case is as follows:\n\n1. Enterprise sends through a cancelation\n2. You send through a cancelation\n\n**Whether you choose to implement all are part of these use cases (or beyond) is up to you.**\n",
+			"item": [
+				{
+					"name": "From Dispatch",
+					"description": "Overview\r\n--------\r\n\r\nThis section documents the following use cases:\r\n\r\n* Receive jobs from Dispatch\r\n* Job cancelations from Dispatch\r\n\r\n\r\nDesign Considerations\r\n---------------------\r\n\r\nAlthough we will not *change* the names of attributes in the payload, it is possible that we'll add *new* attributes to the payload. Therefore make sure that your payload consumption will not break if a new attribute starts being included.\r\n\r\n\r\nPayload Structure\r\n-----------------\r\n\r\nPlease note that the structures defined in this section are our default. If you already have your own preferred structure and/or format in which you prefer to receive updates, please let us know - there's a good chance we'll be able to accomodate you.\r\n\r\nThe [Connector Hub documentation](https://docs.dispatch.me/connector/#get-data-from-dispatch) describes the overall payload structure and how to poll for them and to send through acknowledgement. The two elements from the payload that we care about for performing the processing mentioned in this section are the `Message/Request/Type` and `Message/Request/Payload`.\r\n\r\nTo be relevant for the processing mentioned in this section, ensure that the `Type` has a value of `put_data`. If it does then extract the `Payload` which will have the following basic payload structure:\r\n\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"some_event\": {\r\n                        \"id\": 30462\r\n                        \"external_ids\": [\r\n                            \"account.999.source:enterprise_system_id\"\r\n                        ]\r\n                        ...\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n\r\n\r\n\r\nThe following basics should be used for all event processing:\r\n* `some_event` - Use this for your branch logic as described in the sections below. This can also be used to determine status.\r\n* `external_id` - This is the Enterprise's record ID. This will appear in an array element.\r\n* `updated_at` - Use this to mark the time the event occured in your system",
+					"item": [
+						{
+							"name": "Job Created",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "We call it a Job. You might call it a Work Order, Service Order or something else. Potato, potāto. Anyway, you will be receiving these from us. Jobs coming from the Dispatch Platform will have the following payload structure:\r\n\r\n```\r\n    \"Payload\": {\r\n        \"Actions\": [\r\n            {\r\n                \"ID\": null,\r\n                \"Put\": {\r\n                    \"job\": {\r\n                        \"id\": 30462,\r\n                        \"organization_id\": 11776,\r\n                        \"title\": \" Claim Details 206\",\r\n                        \"status\": \"offered\",\r\n                        \"status_message\": \"\",\r\n                        \"description\": \"some description\",\r\n                        \"updated_at\": \"2018-05-18T10:05:46+0000\",\r\n                        \"service_type\": \"air conditioning\",\r\n                        \"service_fee\": 0,\r\n                        \"address\": {\r\n                            \"street_1\": \"1755 Ridgeview Dr\",\r\n                            \"street_2\": \"\",\r\n                            \"postal_code\": \"76012\",\r\n                            \"city\": \"Arlington\",\r\n                            \"state\": \"TX\",\r\n                            \"country\": \"United States\",\r\n                            \"timezone\": \"America/Chicago\",\r\n                            \"latitude\": 32.7633905735029,\r\n                            \"longitude\": -97.1352367468659\r\n                        },\r\n                        \"external_ids\": [\r\n                            \"namespace:enterprise_system_id\"\r\n                        ],\r\n                        \"customer\": {\r\n                            \"first_name\": \"James\",\r\n                            \"last_name\": \"Dodd\",\r\n                            \"company_name\": \"\",\r\n                            \"email\": \"devs+dodd@dispatch.me\",\r\n                            \"phone_number\": \"+15559803824\"\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        ]\r\n    }\r\n```\t\r\n\r\nIt is possible and perhaps even likely that not all data will be present. The elements that are populated might vary from Enterprise to Enterprise"
+							},
+							"response": []
+						},
+						{
+							"name": "Job Canceled",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "If an enterprise cancels a job it will come over with the following structure:\r\n\r\n```\r\n\t\"Payload\": {\r\n\t    \"Actions\": [\r\n\t        {\r\n\t            \"ID\": null,\r\n\t            \"Put\": {\r\n\t                \"job\": {\r\n\t                    \"id\": 30462,\r\n\t                    \"status\": \"canceled\",\r\n\t                    \"status_message\": \"\",\r\n\t                    \"updated_at\": \"2018-05-18T10:05:46+0000\",\r\n\t                    \"external_ids\": [\r\n\t                        \"namespace:enterprise_system_id\"\r\n\t                    ]\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    ]\r\n\t}\r\n```\t\r\n\r\nIt is up to you to decide whether and how to handle this event (or if you want to ignore entirely let us know so we can turn off)."
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8d13775e-aa1a-4a2a-b4b4-4d8a909d3b51",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b504eccb-88b3-4d6d-a274-e36036afb880",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "To Dispatch",
+					"description": "Updates you send back to Dispatch will be sent back through to the Enterprise. This section describes the updates that we are looking to receive. Though we encourage sending over all updates you deem relevant, the following is the recommended minimum set of updates:\n\n1. Acceptance - assuming you have an acceptance step\n2. Schedule\n3. Complete\n\nIt would be also be very beneficial to receive notes too.\n\nPlease note that the structures defined in this section are our default. If you already have your own preferred structure and/or format in which you prefer to receive the data, please let us know - there's a good chance we'll be able to accomodate you.",
+					"item": [
+						{
+							"name": "Job",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "When you send through a status update send over the following:\r\n\r\n```\r\n    [{\r\n\t\t\"header\": {\r\n\t\t\t\"record_type\": \"job\",\r\n\t\t\t\"version\": \"v3\"\r\n\t\t},\r\n\t\t\"record\": {\r\n\t\t\t\"id\": 555,\r\n\t\t\t\"status\": \"accepted\"\r\n\t\t}\r\n\t}]\r\n```\t\r\n\r\n\r\nPlease try to map the `status` to one of the following values:\r\n\r\n* **accepted** - job is accepted by Service Provider\r\n* rejected - job is rejected by Service Provider\r\n* enroute\r\n* started\r\n* **completed**\r\n* canceled\r\n\r\nValues in the list above appearing in bold are the critical job milestone statuses that should be sent over to make the connector effort valuable. The others are optional (but recommended if you have them)."
+							},
+							"response": []
+						},
+						{
+							"name": "Appointment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "When you schedule an appointment send over the following:\r\n\r\n```\r\n    [{\r\n\t\t\"header\": {\r\n\t\t\t\"record_type\": \"appointment\",\r\n\t\t\t\"version\": \"v3\"\r\n\t\t},\r\n\t\t\"record\": {\r\n\t\t\t\"status\": \"scheduled\",\r\n\t\t\t\"time\": \"2018-10-30T22:00:00.000Z\",\r\n\t\t\t\"duration\": 14400,\r\n\t\t\t\"job_id\": 555\r\n\t\t}\r\n\t}]\r\n```\t\r\n\r\nWhere:\r\n\r\n- `time` - this is the scheduled start window of the appointment\r\n- `duration` - this is the duration of the appointment window in **seconds**"
+							},
+							"response": []
+						},
+						{
+							"name": "Notes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/in",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"in"
+									]
+								},
+								"description": "This is an optional but recommended update.\r\n\r\nWhen you send through notes please send the following structure: \r\n\r\n```\r\n\t[{\r\n\t\t\"header\": {\r\n\t\t\t\"record_type\": \"attachment\",\r\n\t\t\t\"version\": \"v3\"\r\n\t\t},\r\n\t\t\"record\": {\r\n\t\t\t\"action\": \"post\",\r\n\t\t\t\"job_id\": 555,\r\n\t\t\t\"description\": \"some note\"\r\n\t\t}\r\n\t}]\r\n```\t\r\n"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4cdf92fa-026e-4b15-b17b-f4906b2c7265",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "22b50d66-229e-4525-9b86-d56cf3c04729",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0840ff3e-d8c8-4106-b647-911929d00dae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a873ea78-7efc-41d9-943d-c6eeb59e0dbb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "General",
+			"description": "Some general processing relevant to all connector types.",
+			"item": [
+				{
+					"name": "Ack/Error",
+					"description": "The processing mentioned in this section is optional.",
+					"item": [
+						{
+							"name": "Acknowledgements",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nIf you wish to receive acknowledgements of transactions successfully sent to the Dispatch Platform you can subscribe to this event. By default this is not sent back into the event stream so please let us know if you want this enabled.\r\n\r\nThis event indicates acknowledgement that a transaction got processed successfully on the Dispatch side. It does not indicate that the Dispatcher acknowledged the job.\r\n\r\nAnd just like any other event you'll need send an update to `agent/out` to remove this from the queue (yes you'll need to acknowledge the acknowledgement!)\r\n\r\nEvent Processing\r\n================\r\n\r\nThese will have the following payload structure:\r\n\r\n```\r\n  \"Payload\": {\r\n    \"Actions\": [{\r\n      \"ID\": \"34f3b843-0318-5c27-a34c-ebc4bff3e46d\",\r\n      \"Put\": {\r\n        \"ack\": {\r\n            \"id\": 555,\r\n            \"action\": \"inbound_ack\",\r\n            \"model\": \"job\",\r\n            \"status\": 201,\r\n            \"ack_message\": \"Created job\",\r\n            \"data\": {\r\n              \"organization_id\": 11789,\r\n              \"external_ids\": [\r\n                \"namespace:enterprise_system_id\"\r\n              ]\r\n            }\r\n        }\r\n      }\r\n    }]\r\n  }    \r\n```\r\n\r\nWhere:\r\n\r\n* `id` - the corresponding ID of the created entity in Dispatch in case you wish to store it (optional)\r\n\r\n\r\nPLEASE NOTE that this event is only indicates if an insert/update that *you sent through* successfully happened on the Dispatch side. To this end, the very fact that you're receiving this event indicates that the transaction was successful and therefore the only thing you need to retrieve from this event is the `enterprise_system_id` in order to know which record to update on your end. Any other data contained within this event is entirely optional and most likely should be ignored."
+							},
+							"response": []
+						},
+						{
+							"name": "Errors",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {},
+								"url": {
+									"raw": "https://connect-sbx.dispatch.me/agent/out",
+									"protocol": "https",
+									"host": [
+										"connect-sbx",
+										"dispatch",
+										"me"
+									],
+									"path": [
+										"agent",
+										"out"
+									]
+								},
+								"description": "Overview\r\n========\r\n\r\nIf you wish to receive notification of transactions that errored out you can subscribe to this event. By default this is not sent back into the event stream so please let us know if you want this enabled. \r\n\r\nWe attempt to only send \"fixable\" errors to this endpoint. That is, errors that occurred due to bad data to this endpoint. These generally tend to be errors in the 400 range.\r\n\r\nAs a general rule, the Dispatch Platform does everything to avoid transactions being rejected. As long as the minimal amout of data for a transaction is available the transaction will succeed. As such, we believe that errors are likely to occur during the testing phase of the project and thereafter should be very few and far between.\r\n\r\nEvent Processing\r\n================\r\n\r\nThese will have the following payload structure:\r\n\r\n```\r\n\t\"Payload\": {\r\n\t    \"Actions\": [\r\n\t        {\r\n\t            \"ID\": \"167e4f3e-b644-5031-9946-1cbcecefff44\",\r\n\t            \"Put\": {\r\n\t                \"err\": {\r\n\t                    \"payload\": {\r\n\t                        \"data_type\": \"customer\",\r\n\t                        \"details\": {\r\n\t                            \"response\": \"{\\\"errors\\\":{\\\"phone_numbers\\\":[\\\"contain invalid phone number '+1901486247'\\\"]}}\",\r\n\t                            \"code\": 422,\r\n\t                            \"method\": \"POST\"\r\n\t                        },\r\n\t                        \"data\": {\r\n\t                            \"external_ids\": [\r\n\t                                \"0083702\"\r\n\t                            ],\r\n\t                            \"first_name\": \"Mike\",\r\n\t                            \"last_name\": \"Smith\",\r\n\t                            \"notes\": \"Discount: 0.0\\nLateCharge: 1.5\",\r\n\t                            \"billing_address\": {\r\n\t                                \"street_1\": \"1001 Donnegan Cv\",\r\n\t                                \"city\": \"Minneaplois\",\r\n\t                                \"state\": \"MN\",\r\n\t                                \"postal_code\": \"55408\"\r\n\t                            },\r\n\t                            \"phone_number\": \"+1555486247\",\r\n\t                            \"organization_id\": 11789\r\n\t                        }\r\n\t                    }\r\n\t                }\r\n\t            }\r\n\t        }\r\n\t    ]\r\n\t}\r\n```\r\n\r\nWhere:\r\n\r\n* `data_type` - the record type for which the error occurred\r\n* `details` - error details\r\n* `data` - the payload with the offending data"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "8ec37094-07f7-4927-a352-65e2de578f25",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "56c17ef4-2948-437e-a43e-f6b57814aa96",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f3187ada-257c-4d30-b112-bd5e56959f98",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bfe58c9c-de01-4765-a4e7-381457b10d4b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "17ea7d55-6ce5-46a9-97fe-8c077f5076e1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6d43753b-2e7c-4452-98de-0d65efb3a44a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

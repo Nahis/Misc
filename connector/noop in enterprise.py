@@ -28,76 +28,72 @@ def get_signature(key, body):
 
 ## Set these up once
 headers = {'Content-Type':'application/json'}
-#headers['RecordType'] = 'job'  # specify record type you are working with. This should correlate with the lambda_function.xform_handlers
+
+### DEV noop 2
 env = '-dev'
 public_key = 'account|480|noop'
 secret_key = '0ef69a9b62125c1d04ab43535eac377bcdd2b68815e484c501be461eafd4ba71'
 
+### SBX noop 2
+# env = '-sbx'
+# public_key = 'account|110|noop'
+# secret_key = 'fa225b48285bbc1700dc933edd68b1e2bc834ff9325b8f8dbac1126a6652db70'
+
 payload = r"""
 [{
-	"header": {
-		"record_type": "job",
-		"version": "v3"
-	},
-	"record": {
-		"title": "Test job noop 1014 3",
-		"status": "complete",
-		"description": "in the basement",
-		"external_id": "job_noop14_3",
-		"address": {
-			"postal_code": "01234",
-			"city": "Boston",
-			"state": "MA",
-			"street_1": "1214 Summer St",
-			"street_2": "apt. 1"
+		"header": {
+			"record_type": "job",
+			"version": "v3"
 		},
-		"service_type": "plumber",
-		"customer": {
-			"first_name": "Marian",
-			"last_name": "Noop",
-			"external_id": "cust_noop14_1",
-			"email": "devs+noop14@dispatch.me",
-			"phone_numbers": [{
-				"number": "+15550913814",
-				"primary": true,
-				"type": "Mobile"
-			}],
-			"home_address": {
-				"street_1": "3914 Ford Street",
-				"city": "Revere",
-				"state": "MA",
-				"postal_code": "02151"
-			}
-		},
-		"organization": {
-			"name": "Test noop14",
-			"email": "devs+noop14@dispatch.me",
-			"external_id": "org_noop14",
-			"phone_number": "(555)014-0352",
-
+		"record": {
+			"title": "Test job noop 626 01",
+			"status": "unscheduled",
+			"description": "in the basement",
+			"external_id": "job_noop14_626_01",
 			"address": {
-				"street_1": "3314 Maple Avenue",
-				"postal_code": "90731",
-				"city": "San Pedro",
-				"state": "CA"
-			}
+				"postal_code": "01234",
+				"city": "Boston",
+				"state": "MA",
+				"street_1": "1214 Summer St",
+				"street_2": "apt. 1"
+			},
+			"service_type": "plumber",
+			"customer": {
+				"first_name": "Marian",
+				"last_name": "Noop",
+				"external_id": "cust_noop14_1",
+				"email": "devs+noop14@dispatch.me",
+				"phone_numbers": [{
+					"number": "+15550913814",
+					"primary": true,
+					"type": "Mobile"
+				}],
+				"home_address": {
+					"street_1": "3914 Ford Street",
+					"city": "Revere",
+					"state": "MA",
+					"postal_code": "02151"
+				}
+			},
+			"external_organization_id": "dispatchme"
+		}
+	},
+	{
+		"header": {
+			"record_type": "appointment",
+			"version": "v3"
 		},
-		"suggested_times": [
-		    {
-                "start_time": "2018-06-05T17:00:00+0000",
-                "end_time": "2018-06-05T19:00:00+0000"
-		    },
-		    {
-                "start_time": "2018-06-06T17:00:00+0000",
-                "end_time": "2018-06-06T19:00:00+0000"
-		    },
-		    {
-                "start_time": "2018-06-07T17:00:00+0000",
-                "end_time": "2018-06-07T17:00:00+0000"
-		    }
-		]
+		"record": {
+			"external_id": "job_noop14_626_01",
+			"time": "2018-06-27T22:00:00.000Z",
+			"status": "scheduled",
+			"duration": 1600,
+			"external_user_id": "johnfourth",
+			"external_job_id": "job_noop14_626_01" 
+		}
 	}
-}]
+
+]
 """
 
 make_hub_signed_post_request(public_key,secret_key,'https://connect%s.dispatch.me/agent/in' % env,payload,headers)

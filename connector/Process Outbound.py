@@ -43,7 +43,7 @@ while msgs:
             digester = hmac.new(secret_key, body, hashlib.sha256)
             headers['X-Dispatch-Signature'] = binascii.hexlify(digester.digest()).decode('utf-8')
             # Post to agent/ack
-            req = requests.post('https://connect%s.dispatch.me/agent/ack'  % env , headers=headers, data=body)
+            req = requests.post('https://connect%s.dispatch.me/agent/ack' % env, headers=headers, data=body)
             print(req.status_code)
 
     if len(msgs) == MAX_MESSAGES:

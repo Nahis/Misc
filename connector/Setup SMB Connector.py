@@ -52,29 +52,29 @@ payload = r"""
 		},
 		"service_type": "plumber",
 		"customer": {
-			"first_name": "Marian",
+			"first_name": "Donovan",
 			"last_name": "Johnson",
-			"external_id": "ext_marian_johson",
-			"email": "devs+marianjohnson@dispatch.me",
+			"external_id": "ext_donovan_johson",
+			"email": "devs+donovanjohnson@dispatch.me",
 			"phone_numbers": [{
-				"number": "+15550913814",
+				"number": "+15550983814",
 				"primary": true,
 				"type": "Mobile"
 			}],
 			"home_address": {
-				"street_1": "3914 Ford Street",
+				"street_1": "3915 Ford Street",
 				"city": "Revere",
 				"state": "MA",
 				"postal_code": "02151"
 			}
 		},
 		"organization": {
-			"name": "Davisware Testing",
-			"email": "devs+daviswaretesting@dispatch.me",
-			"external_id": "davisware",
-			"phone_number": "(555)015-0352",
+			"name": "DispatchMe Testing",
+			"email": "devs+dispatchme1@dispatch.me",
+			"external_id": "dispatchme",
+			"phone_number": "(555)015-4123",
 			"address": {
-				"street_1": "3315 Maple Avenue",
+				"street_1": "3316 Maple Avenue",
 				"postal_code": "90731",
 				"city": "San Pedro",
 				"state": "CA"
