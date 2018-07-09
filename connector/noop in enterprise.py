@@ -46,10 +46,10 @@ payload = r"""
 			"version": "v3"
 		},
 		"record": {
-			"title": "Test job noop 626 01",
+			"title": "Test job noop 709 02",
 			"status": "unscheduled",
 			"description": "in the basement",
-			"external_id": "job_noop14_626_01",
+			"external_id": "test_123b",
 			"address": {
 				"postal_code": "01234",
 				"city": "Boston",
@@ -76,20 +76,6 @@ payload = r"""
 				}
 			},
 			"external_organization_id": "dispatchme"
-		}
-	},
-	{
-		"header": {
-			"record_type": "appointment",
-			"version": "v3"
-		},
-		"record": {
-			"external_id": "job_noop14_626_01",
-			"time": "2018-06-27T22:00:00.000Z",
-			"status": "scheduled",
-			"duration": 1600,
-			"external_user_id": "johnfourth",
-			"external_job_id": "job_noop14_626_01" 
 		}
 	}
 
