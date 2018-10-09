@@ -14,12 +14,15 @@ headers = {
 payload = r"""
     [{
         "header": {
-            "record_type": "job",
+            "record_type": "appointment",
             "version": "v3"
         },
         "record": {
-            "id": 109110,
-            "status": "accepted"
+            "status": "scheduled",
+            "time": "2018-10-30T22:00:00.000Z",
+            "duration": 14600,
+            "job_id": 138802,
+            "external_id": "test_813_1"
         }
     }]
 """

@@ -2,16 +2,16 @@ import psycopg2
 import boto3
 import json
 
-BUCKET = 'connector-hub-xref-dev'
+BUCKET = 'connector-hub-xref-prod'
 CONN_STR = "host='warehouse-prod.cfa5bandh8z5.us-east-1.rds.amazonaws.com' dbname='warehouse' user='warehouse' password='pAycEOkc^Q88!1fI' port='5432'"
-ACCOUNT_ID = 480
+ACCOUNT_ID = 8
 
 def create_job_xref():
   try:
     conn = psycopg2.connect(CONN_STR)
     print("Connected!")
     cur = conn.cursor()
-    cur.execute('select id, external_id from jobs where account_id = %s order by created_at desc limit 5' % ACCOUNT_ID)
+    cur.execute("select id, external_id from jobs where account_id = %s and external_id is not null and created_at > '8/17/2018' and created_at < '8/21/2018' order by created_at desc" % ACCOUNT_ID)
     rows = cur.fetchall()
     s3_client = boto3.resource('s3')
     for row in rows:

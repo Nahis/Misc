@@ -1,7 +1,5 @@
-'''
-This can be used to post a request to the inbound connect endpoint using HMAC auth.
-Just modify the payload as necessary and run.
-'''
+# Use this to setup an org for the BMS testing. Make sure to fill in the payload before posting
+
 import requests
 import binascii
 import hmac
@@ -34,54 +32,25 @@ public_key = 'account|110|noop'
 secret_key = 'fa225b48285bbc1700dc933edd68b1e2bc834ff9325b8f8dbac1126a6652db70'
 
 payload = r"""
-[{
-	"header": {
-		"record_type": "job",
-		"version": "v3"
-	},
-	"record": {
-		"title": "Test job 2",
-		"description": "in the basement",
-		"external_id": "ext_test_job_2",
-		"address": {
-			"postal_code": "01234",
-			"city": "Boston",
-			"state": "MA",
-			"street_1": "1214 Summer St",
-			"street_2": "apt. 1"
-		},
-		"service_type": "plumber",
-		"customer": {
-			"first_name": "Donovan",
-			"last_name": "Johnson",
-			"external_id": "ext_donovan_johson",
-			"email": "devs+donovanjohnson@dispatch.me",
-			"phone_numbers": [{
-				"number": "+15550983814",
-				"primary": true,
-				"type": "Mobile"
-			}],
-			"home_address": {
-				"street_1": "3915 Ford Street",
-				"city": "Revere",
-				"state": "MA",
-				"postal_code": "02151"
-			}
-		},
-		"organization": {
-			"name": "DispatchMe Testing",
-			"email": "devs+dispatchme1@dispatch.me",
-			"external_id": "dispatchme",
-			"phone_number": "(555)015-4123",
-			"address": {
-				"street_1": "3316 Maple Avenue",
-				"postal_code": "90731",
-				"city": "San Pedro",
-				"state": "CA"
-			}
-		}
+[
+	{
+	  "header": {
+	    "record_type": "organization",
+	    "version": "v3"
+	  },
+	  "record": {
+		  "name" : "<Name of BMS>",
+		  "email" : "<bms_email>",
+		  "external_id": "<bms_external_id>",
+		  "phone_number" : "<bms_phone>",
+		  "address": {
+		        "street_1": "3310 Maple Avenue",
+		        "postal_code": "90731",
+		        "city": "San Pedro",
+		        "state": "CA"
+		 }
+	  }
 	}
-}]
+]
 """
-
 make_hub_signed_post_request(public_key,secret_key,'https://connect%s.dispatch.me/agent/in' % env,payload,headers)
