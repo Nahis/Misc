@@ -42,7 +42,6 @@ while items:
     c.request('GET', (url+ '%s') % offset, headers=headers)
     res = c.getresponse()
     r = res.read().decode('utf8')
-    #data = json.loads(r.replace("'", '"'))
     data = json.loads(r)
     items = data['items'] if 'items' in data else None
     print(offset)
