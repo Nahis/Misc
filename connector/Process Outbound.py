@@ -7,24 +7,25 @@ import json
 MAX_MESSAGES = 10
 BODY = ('{"maxNumberOfMessages": %s}' % MAX_MESSAGES).encode('utf-8')
 env = '-sbx'
-secret_key = '789f0c408f963c896f50a3ecdf21b5cb707dd34de6e5726b06487c5f80d8565c'
+secret_key = '8d2b3822b29fec8a5b3a5362b150f425b1cdd7c1df238d7ce3edab2ca7ab85a3'
 headers = {
     'Content-Type': 'application/json',
-    'X-Dispatch-Key': 'organization|98193|noop'
+    'X-Dispatch-Key': 'organization|80577|noop'
 }
 secret_key = bytearray.fromhex(secret_key)  # translate key from hex to bytes
 # Calculate the hash and assign to HTTP header
 digester = hmac.new(secret_key, BODY, hashlib.sha256)
 headers['X-Dispatch-Signature'] = binascii.hexlify(digester.digest()).decode('utf-8')
+print(binascii.hexlify(digester.digest()).decode('utf-8'))
 # Post to agent/out
 response = requests.post('https://connect%s.dispatch.me/agent/out' % env, headers=headers, data=BODY)
 msgs = json.loads(response.text)
 while msgs:
     for msg in msgs:
-        m = msg['Message']
-        ret = 'success'
-        err = ''
         try:
+            m = msg['Message']
+            ret = 'success'
+            err = ''
             # Retrieve message type and payload
             req_type = m['Request']['Type']
             payload = m['Request']['Payload']

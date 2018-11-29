@@ -37,12 +37,22 @@ payload = r"""
             "version": "v3"
         },
         "record":{
-            "external_ids": ["dispatchme_96_1"],
-            "external_organization_id": "dispatchme",
+            "external_ids": ["walkabout_1019_1"],
+            "external_organization_id": "walkabout",
             "title": "Priority: TEST Dispatch TEST - Standard | Model Name: 24\" UNDERCOUNTER REFRIGERATOR, RIGHT HINGE",
             "description": "**Product Serial Number:** 2464376\n\n**Product Model Number:** UC-24R-RH\n\n**Product Model Name:** 24\" UNDERCOUNTER REFRIGERATOR, RIGHT HINGE\n\n**Problem Description:** THIS IS A DM TEST.\n\n**KB Article:** https://km.subzero.com/advisor/showcase?project=Sub-Zero&case=K29130342\n\n**Special Authorization:** http://service.subzero.com/specialauthentry/createinternal/?ticketnumber=004-00-9004007\n\n**Unit History:** http://service.subzero.com/Tools/UnitHistory?SerialNumber=2464376\n\n**Product Full Warranty:** 2019-06-05\n\n**Product Parts Warranty**: 2029-06-05\n\n**Product SS Warranty**: 2022-06-05\n\n**ASKO Article Number**: \n\n**Installer**: \n\n**Sub-Zero Ticket ID**: test-ud-13012\n\n",
             "service_fee": 400,
             "service_fee_precollected": true,
+            "equipment_descriptions": [
+                {
+                    "manufacturer": "Sub-Zero Freezer Company",
+                    "model_number": "UC-24R-RH",
+                    "serial_number": "2464376",
+                    "installation_date": "2017-06-05",
+                    "equipment_type": "Undercounter 24"
+                }
+            ],
+            "symptom": "Door won't open",            
             "status": "offered",
             "address":{
                 "postal_code": "01235",
@@ -55,7 +65,7 @@ payload = r"""
             "customer": {
                 "first_name": "Mitch",
                 "last_name": "Davis",
-                "external_id": "dispatchme_mitchdavis",
+                "external_id": "walkabout_mitchdavis",
                 "email": "devs+mitchdavis@dispatch.me",
                 "phone_numbers":[
                    {
@@ -71,18 +81,7 @@ payload = r"""
                         "postal_code": "02151"
                 }
             },
-
-              "equipment_descriptions": [
-                {
-                  "manufacturer": "Sub-Zero Freezer Company",
-                  "model_number": "UC-24R-RH",
-                  "serial_number": "2464376",
-                  "installation_date": "2017-06-05",
-                  "equipment_type": "Undercounter 24"
-                }
-              ],
-            "symptom": "Door won't open",
-            "marketing_attributions": [
+             "marketing_attributions": [
               {
                 "content": "bingo",
                 "campaign": "mamba",
