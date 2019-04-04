@@ -66,8 +66,8 @@ def insert_db(prefix):
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
 
-insert_db('0.0.1/listen/1.0.0/2018/10/11/11')
-insert_db('0.0.1/listen/1.0.0/2018/10/11/12')
+insert_db('0.0.1/listen/1.0.0/2018/12/03')
+
 
 if conn is not None:
     conn.close()

@@ -37,19 +37,32 @@ payload = r"""
             "version": "v3"
         },
         "record":{
-            "external_ids": ["walkabout_1019_1"],
-            "external_organization_id": "walkabout",
+            "external_ids": ["dispatchme_1226_7"],
+            "external_organization_id": "epass",
             "title": "Priority: TEST Dispatch TEST - Standard | Model Name: 24\" UNDERCOUNTER REFRIGERATOR, RIGHT HINGE",
             "description": "**Product Serial Number:** 2464376\n\n**Product Model Number:** UC-24R-RH\n\n**Product Model Name:** 24\" UNDERCOUNTER REFRIGERATOR, RIGHT HINGE\n\n**Problem Description:** THIS IS A DM TEST.\n\n**KB Article:** https://km.subzero.com/advisor/showcase?project=Sub-Zero&case=K29130342\n\n**Special Authorization:** http://service.subzero.com/specialauthentry/createinternal/?ticketnumber=004-00-9004007\n\n**Unit History:** http://service.subzero.com/Tools/UnitHistory?SerialNumber=2464376\n\n**Product Full Warranty:** 2019-06-05\n\n**Product Parts Warranty**: 2029-06-05\n\n**Product SS Warranty**: 2022-06-05\n\n**ASKO Article Number**: \n\n**Installer**: \n\n**Sub-Zero Ticket ID**: test-ud-13012\n\n",
+            "service_instructions": "Internal servoce instructions",
             "service_fee": 400,
-            "service_fee_precollected": true,
             "equipment_descriptions": [
                 {
                     "manufacturer": "Sub-Zero Freezer Company",
                     "model_number": "UC-24R-RH",
+                    "model_name": "some model",
                     "serial_number": "2464376",
                     "installation_date": "2017-06-05",
-                    "equipment_type": "Undercounter 24"
+                    "equipment_type": "Undercounter 24",
+                    "location": "Roof 2 Story",
+                    "problem": "Air Conditioning (Central-Electric)",
+                    "symptom": "NOT WORKING,Not Cooling",
+                    "custom_fields": {
+                        "age": "11-15 Years",
+                        "size": "3.0 Tons",
+                        "other": "R22/10 SEER",
+                        "style": "Split-Air Cooled",
+                        "how_many": "2.",
+                        "area_of_home": "Whole House",
+                        "manufacturer_warranty": "No"
+                    }                    
                 }
             ],
             "symptom": "Door won't open",            

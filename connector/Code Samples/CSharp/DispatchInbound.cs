@@ -63,8 +63,8 @@ namespace DispatchConnect
                 "]";
             byte[] bPayload = Encoding.UTF8.GetBytes(payload);
             byte[] gZipPayload = Compress(bPayload);
-            byte[] mysecretyKey = ConvertHexStringToByteArray(SecretKey);
-            string XDispatchSignature = GetSignatureHash(mysecretyKey, gZipPayload);
+            byte[] bSecretyKey = ConvertHexStringToByteArray(SecretKey);
+            string XDispatchSignature = GetSignatureHash(bSecretyKey, gZipPayload);
             HttpWebRequest WR = (HttpWebRequest)HttpWebRequest.Create("https://connect-sbx.dispatch.me/agent/in");
             WR.Method = "POST";
             WR.Headers.Add("X-Dispatch-Signature", XDispatchSignature);
