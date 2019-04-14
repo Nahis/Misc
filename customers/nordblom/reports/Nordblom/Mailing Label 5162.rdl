@@ -26,7 +26,7 @@
                                 <TextRun>
                                   <Value>=Fields!Label.Value</Value>
                                   <Style>
-                                    <FontSize>9pt</FontSize>
+                                    <FontSize>8pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
