@@ -1,2 +1,7 @@
 # IDEs
 */.idea/
+/debug
+/bin
+/customers/nordblom/reports/*/bin
+*.data
+*.user

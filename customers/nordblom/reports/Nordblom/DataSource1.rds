@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="DataSource1">
+  <ConnectionProperties>
+    <Extension>MSCRMFETCH</Extension>
+    <ConnectString>https://nordblom.crm.dynamics.com</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>afc584cd-3a5f-4b39-b189-f132a62c3434</DataSourceID>
+</RptDataSource>

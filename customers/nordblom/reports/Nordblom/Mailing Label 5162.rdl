@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Tablix11">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>4in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>1.45in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Rectangle Name="Rectangle11">
+                      <ReportItems>
+                        <Textbox Name="Label">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Label.Value</Value>
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>10pt</LeftIndent>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Label</rd:DefaultName>
+                          <Height>1.45in</Height>
+                          <Width>4in</Width>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </ReportItems>
+                      <KeepTogether>true</KeepTogether>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Rectangle>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details" />
+              <SortExpressions>
+                <SortExpression>
+                  <Value>=Fields!fullname.Value</Value>
+                </SortExpression>
+              </SortExpressions>
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>Main</DataSetName>
+        <Height>1.45in</Height>
+        <Width>4in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>1.45833in</Height>
+    <Style />
+  </Body>
+  <Width>4in</Width>
+  <Page>
+    <LeftMargin>0.156in</LeftMargin>
+    <RightMargin>0.156in</RightMargin>
+    <TopMargin>0.75in</TopMargin>
+    <Columns>2</Columns>
+    <ColumnSpacing>0.188in</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="CRM">
+      <ConnectionProperties>
+        <DataProvider>MSCRMFETCH</DataProvider>
+        <ConnectString>https://nordblom.crm.dynamics.com</ConnectString>
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>8913fd1e-95a5-466a-aa91-d84c30e92dc9</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="Main">
+      <Query>
+        <DataSourceName>CRM</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="CRM_contact">
+            <Value>=Parameters!CRM_contact.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>
+					&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+					&lt;entity name="contact" enableprefiltering="1"&gt;
+					&lt;attribute name="contactid" /&gt;
+					&lt;attribute name="salutation" /&gt;
+					&lt;attribute name="fullname" /&gt;
+					&lt;attribute name="suffix" /&gt;
+					&lt;attribute name="jobtitle" /&gt;
+					&lt;attribute name="parentcustomerid" alias="accountid"/&gt;
+					&lt;attribute name="address1_line1" alias="line1"/&gt;
+					&lt;attribute name="address1_line2" alias="line2"/&gt;
+					&lt;attribute name="address1_city" alias="city"/&gt;
+					&lt;attribute name="address1_stateorprovince" alias="state"/&gt;
+					&lt;attribute name="address1_postalcode" alias="zip"/&gt;
+					&lt;attribute name="telephone1" alias="phone"/&gt;
+					&lt;attribute name="mobilephone" alias="mobile"/&gt;
+					&lt;attribute name="fax"/&gt;
+					&lt;attribute name="emailaddress1" alias="email"/&gt;
+					&lt;attribute name="lastname" /&gt;
+					&lt;attribute name="snt_letterheadtitle" alias="letterheadtitle" /&gt;
+					&lt;order attribute="lastname"/&gt;
+					&lt;order attribute="firstname"/&gt;
+
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;/filter&gt;
+					&lt;/entity&gt;
+					&lt;/fetch&gt;
+				</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="contactid">
+          <DataField>contactid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="salutation">
+          <DataField>salutation</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="fullname">
+          <DataField>fullname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="suffix">
+          <DataField>suffix</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="jobtitle">
+          <DataField>jobtitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="accountid">
+          <DataField>accountid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="line1">
+          <DataField>line1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="line2">
+          <DataField>line2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="accountidValue">
+          <DataField>accountidValue</DataField>
+          <rd:TypeName>System.Guid</rd:TypeName>
+        </Field>
+        <Field Name="city">
+          <DataField>city</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="accountidEntityName">
+          <DataField>accountidEntityName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="state">
+          <DataField>state</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="zip">
+          <DataField>zip</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="phone">
+          <DataField>phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="lastname">
+          <DataField>lastname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="mobile">
+          <DataField>mobile</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="fax">
+          <DataField>fax</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="email">
+          <DataField>email</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="letterheadtitle">
+          <DataField>letterheadtitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Label">
+          <Value>
+						=
+						IIF(Fields!letterheadtitle.Value is Nothing, Fields!fullname.Value, Fields!letterheadtitle.Value) &amp; iif(Fields!jobtitle.Value &lt;&gt; "", "           " &amp; Fields!jobtitle.Value,"") &amp; vbCRLF &amp;
+						iif(Fields!accountid.Value &lt;&gt; "", Fields!accountid.Value &amp; vbCRLF,"") &amp;
+						iif(Fields!line1.Value &lt;&gt; "", Fields!line1.Value &amp; vbCRLF,"") &amp;
+						iif(Fields!line2.Value &lt;&gt; "", Fields!line2.Value &amp; vbCRLF,"") &amp;
+						iif(Fields!city.Value &lt;&gt; "", Fields!city.Value &amp; ", ","") &amp; iif(Fields!state.Value &lt;&gt; "", Fields!state.Value,"") &amp; " " &amp; iif(Fields!zip.Value &lt;&gt; "", Fields!zip.Value,"") &amp; vbCRLF &amp;
+						iif(Fields!fax.Value &lt;&gt; "", "Fax  " &amp; Fields!fax.Value &amp; "     ","") &amp; iif(Fields!phone.Value &lt;&gt; "", "Phone  " &amp; Fields!phone.Value,"") &amp; vbCRLF &amp;
+						iif(Fields!mobile.Value &lt;&gt; "", "Cell  " &amp; Fields!mobile.Value &amp; "     ","") &amp; iif(Fields!email.Value &lt;&gt; "", Fields!email.Value,"")
+					</Value>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="CRM_contact">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;&lt;entity name="contact"&gt;&lt;all-attributes /&gt;&lt;filter type="and"&gt;&lt;condition attribute="statecode" operator="eq" value="0" /&gt;&lt;/filter&gt;&lt;/entity&gt;&lt;/fetch&gt;</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM contact</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
+  <CustomProperties>
+    <CustomProperty>
+      <Name>Custom</Name>
+      <Value>&lt;MSCRM xmlns="mscrm"&gt;&amp;lt;ReportFilter&amp;gt;&amp;lt;ReportEntity paramname="CRM_contact" donotconvert="1"&amp;gt;&amp;lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&amp;gt;&amp;lt;entity name="contact"&amp;gt;&amp;lt;all-attributes /&amp;gt;&amp;lt;filter type="and"&amp;gt;&amp;lt;condition attribute="statecode" operator="eq" value="0" /&amp;gt;&amp;lt;/filter&amp;gt;&amp;lt;/entity&amp;gt;&amp;lt;/fetch&amp;gt;&amp;lt;/ReportEntity&amp;gt;&amp;lt;/ReportFilter&amp;gt;&lt;/MSCRM&gt;</Value>
+    </CustomProperty>
+  </CustomProperties>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>8f5be8ac-c84a-4ff3-a829-02d7b2be9c6f</rd:ReportID>
+</Report>

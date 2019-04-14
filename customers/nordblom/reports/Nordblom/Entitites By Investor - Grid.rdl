@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+	<Body>
+		<ReportItems>
+			<Tablix Name="Tablix1">
+				<TablixBody>
+					<TablixColumns>
+						<TablixColumn>
+							<Width>14.65302in</Width>
+						</TablixColumn>
+					</TablixColumns>
+					<TablixRows>
+						<TablixRow>
+							<Height>0.51852in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Rectangle Name="Rectangle1">
+											<ReportItems>
+												<Subreport Name="Investments">
+													<ReportName>Entitites By Investor - Grid Level 1</ReportName>
+													<Parameters>
+														<Parameter Name="EntityID">
+															<Value>=Fields!snt_entityid.Value</Value>
+														</Parameter>
+														<Parameter Name="CRM_URL">
+															<Value>=Parameters!CRM_URL.Value</Value>
+														</Parameter>
+														<Parameter Name="Level">
+															<Value>=Parameters!Level.Value</Value>
+														</Parameter>
+														<Parameter Name="Investor">
+															<Value>=iif(isNothing(Fields!snt_name.Value),"",Fields!snt_name.Value)</Value>
+														</Parameter>
+														<Parameter Name="LevelLimit">
+															<Value>=Parameters!LevelLimit.Value</Value>
+														</Parameter>
+														<Parameter Name="FactoredPercent">
+															<Value>100</Value>
+														</Parameter>
+														<Parameter Name="Year">
+															<Value>=Parameters!Year.Value</Value>
+														</Parameter>
+													</Parameters>
+													<Top>0.26852in</Top>
+													<Height>0.25in</Height>
+													<Width>14.65302in</Width>
+													<Visibility>
+														<Hidden>=iif(((CInt(Parameters!Level.Value)+1) &lt;= Parameters!LevelLimit.Value) and CountRows("DataSet1")&gt;0,False, True)</Hidden>
+													</Visibility>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+													</Style>
+												</Subreport>
+												<Textbox Name="Textbox5">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Level</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style />
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>Textbox1</rd:DefaultName>
+													<Height>0.25in</Height>
+													<Width>0.46181in</Width>
+													<ZIndex>1</ZIndex>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership7">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value EvaluationMode="Constant">Investor</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>0.46181in</Left>
+													<Height>0.25in</Height>
+													<Width>2.10417in</Width>
+													<ZIndex>2</ZIndex>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership8">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Direct %</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>2.56598in</Left>
+													<Height>0.25in</Height>
+													<Width>0.6875in</Width>
+													<ZIndex>3</ZIndex>
+													<ToolTip>="Owned directly by level above"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership9">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Indirect %</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>3.25349in</Left>
+													<Height>0.25in</Height>
+													<Width>0.74654in</Width>
+													<ZIndex>4</ZIndex>
+													<ToolTip>="Owned indirectly by level report run from"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership10">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Entity</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>4.00003in</Left>
+													<Height>0.25in</Height>
+													<Width>2.31611in</Width>
+													<ZIndex>5</ZIndex>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership3">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Property</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style />
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>9.67736in</Left>
+													<Height>0.25in</Height>
+													<Width>2.42013in</Width>
+													<ZIndex>6</ZIndex>
+													<ToolTip>Click to drill to Property</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership11">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Direct Equity</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>6.31614in</Left>
+													<Height>0.25in</Height>
+													<Width>0.80555in</Width>
+													<ZIndex>7</ZIndex>
+													<ToolTip>="Owned directly by level above"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership12">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Other Assets</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>8.80237in</Left>
+													<Height>0.25in</Height>
+													<Width>0.87499in</Width>
+													<ZIndex>8</ZIndex>
+													<ToolTip>="Owned indirectly by level report run from"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership18">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value EvaluationMode="Constant">Value</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>12.09749in</Left>
+													<Height>0.25in</Height>
+													<Width>0.80555in</Width>
+													<ZIndex>9</ZIndex>
+													<ToolTip>="Owned directly by level above"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership19">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Debt</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>12.90304in</Left>
+													<Height>0.25in</Height>
+													<Width>0.87499in</Width>
+													<ZIndex>10</ZIndex>
+													<ToolTip>="Owned indirectly by level report run from"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership20">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value EvaluationMode="Constant">Promote</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>13.77803in</Left>
+													<Height>0.25in</Height>
+													<Width>0.87499in</Width>
+													<ZIndex>11</ZIndex>
+													<ToolTip>="Owned indirectly by level report run from"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership29">
+													<CanGrow>true</CanGrow>
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Net Worth</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>7.92726in</Left>
+													<Height>0.25in</Height>
+													<Width>0.87522in</Width>
+													<ZIndex>12</ZIndex>
+													<ToolTip>="Owned indirectly by level report run from"</ToolTip>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+												<Textbox Name="snt_percentownership13">
+													<KeepTogether>true</KeepTogether>
+													<Paragraphs>
+														<Paragraph>
+															<TextRuns>
+																<TextRun>
+																	<Value>Indirect Equ.</Value>
+																	<Style>
+																		<FontSize>8pt</FontSize>
+																		<FontWeight>Bold</FontWeight>
+																		<Format>0.00%</Format>
+																		<Color>White</Color>
+																	</Style>
+																</TextRun>
+															</TextRuns>
+															<Style>
+																<TextAlign>Left</TextAlign>
+															</Style>
+														</Paragraph>
+													</Paragraphs>
+													<rd:DefaultName>snt_percentownership</rd:DefaultName>
+													<Left>7.12169in</Left>
+													<Height>0.25in</Height>
+													<Width>0.80555in</Width>
+													<ZIndex>13</ZIndex>
+													<Style>
+														<Border>
+															<Style>None</Style>
+														</Border>
+														<PaddingLeft>2pt</PaddingLeft>
+														<PaddingRight>2pt</PaddingRight>
+														<PaddingTop>2pt</PaddingTop>
+														<PaddingBottom>2pt</PaddingBottom>
+													</Style>
+												</Textbox>
+											</ReportItems>
+											<KeepTogether>true</KeepTogether>
+											<Style>
+												<Border>
+													<Style>None</Style>
+												</Border>
+												<TopBorder>
+													<Color>Black</Color>
+													<Style>Dotted</Style>
+													<Width>1pt</Width>
+												</TopBorder>
+												<BackgroundColor>Black</BackgroundColor>
+											</Style>
+										</Rectangle>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+					</TablixRows>
+				</TablixBody>
+				<TablixColumnHierarchy>
+					<TablixMembers>
+						<TablixMember />
+					</TablixMembers>
+				</TablixColumnHierarchy>
+				<TablixRowHierarchy>
+					<TablixMembers>
+						<TablixMember>
+							<Group Name="Details" />
+						</TablixMember>
+					</TablixMembers>
+				</TablixRowHierarchy>
+				<DataSetName>DataSet1</DataSetName>
+				<Top>0.27in</Top>
+				<Left>0.03637cm</Left>
+				<Height>0.51852in</Height>
+				<Width>14.65302in</Width>
+				<Style>
+					<Border>
+						<Style>None</Style>
+					</Border>
+				</Style>
+			</Tablix>
+			<Textbox Name="Entity">
+				<CanGrow>true</CanGrow>
+				<KeepTogether>true</KeepTogether>
+				<Paragraphs>
+					<Paragraph>
+						<TextRuns>
+							<TextRun>
+								<Value>=Fields!snt_name.Value + "   - Equity Position: "+iif(isnothing(Fields!na_snt_networth.Value),"$0", FormatCurrency(Fields!na_snt_networthValue.Value,0))</Value>
+								<Style>
+									<FontWeight>Bold</FontWeight>
+									<Color>White</Color>
+								</Style>
+							</TextRun>
+						</TextRuns>
+						<Style />
+					</Paragraph>
+				</Paragraphs>
+				<ActionInfo>
+					<Actions>
+						<Action>
+							<Hyperlink>=IIF(IsNothing(Parameters!CRM_URL.Value),Nothing,Parameters!CRM_URL.Value &amp; "?ID={"&amp;Fields!snt_entityid.Value.ToString()&amp;"}&amp;LogicalName=snt_entity")</Hyperlink>
+						</Action>
+					</Actions>
+				</ActionInfo>
+				<Height>0.25in</Height>
+				<Width>14.66734in</Width>
+				<ZIndex>1</ZIndex>
+				<ToolTip>Click to drill to Entity</ToolTip>
+				<Style>
+					<Border>
+						<Style>None</Style>
+					</Border>
+					<BackgroundColor>Black</BackgroundColor>
+					<PaddingLeft>2pt</PaddingLeft>
+					<PaddingRight>2pt</PaddingRight>
+					<PaddingTop>2pt</PaddingTop>
+					<PaddingBottom>2pt</PaddingBottom>
+				</Style>
+			</Textbox>
+		</ReportItems>
+		<Height>0.78852in</Height>
+		<Style />
+	</Body>
+	<Width>14.66734in</Width>
+	<Page>
+		<PageHeader>
+			<Height>0.36in</Height>
+			<PrintOnFirstPage>true</PrintOnFirstPage>
+			<PrintOnLastPage>true</PrintOnLastPage>
+			<ReportItems>
+				<Textbox Name="textbox1">
+					<CanGrow>true</CanGrow>
+					<KeepTogether>true</KeepTogether>
+					<Paragraphs>
+						<Paragraph>
+							<TextRuns>
+								<TextRun>
+									<Value>Entitites By Investor - Grid</Value>
+									<Style>
+										<FontFamily>Tahoma</FontFamily>
+										<FontSize>20pt</FontSize>
+										<FontWeight>Bold</FontWeight>
+										<Color>White</Color>
+									</Style>
+								</TextRun>
+							</TextRuns>
+							<Style />
+						</Paragraph>
+					</Paragraphs>
+					<rd:DefaultName>textbox1</rd:DefaultName>
+					<Left>0.03637cm</Left>
+					<Height>0.36in</Height>
+					<Width>14.65302in</Width>
+					<Style>
+						<BackgroundColor>Black</BackgroundColor>
+						<PaddingLeft>2pt</PaddingLeft>
+						<PaddingRight>2pt</PaddingRight>
+						<PaddingTop>2pt</PaddingTop>
+						<PaddingBottom>2pt</PaddingBottom>
+					</Style>
+				</Textbox>
+			</ReportItems>
+			<Style>
+				<Border>
+					<Style>None</Style>
+				</Border>
+			</Style>
+		</PageHeader>
+		<LeftMargin>1in</LeftMargin>
+		<RightMargin>1in</RightMargin>
+		<TopMargin>1in</TopMargin>
+		<BottomMargin>1in</BottomMargin>
+		<Style />
+	</Page>
+	<AutoRefresh>0</AutoRefresh>
+	<DataSources>
+		<DataSource Name="DataSource1">
+			<ConnectionProperties>
+				<DataProvider>MSCRMFETCH</DataProvider>
+				<ConnectString>https://nordblom.crm.dynamics.com</ConnectString>
+				<Prompt>Specify a user name and password for data source DataSource1:</Prompt>
+			</ConnectionProperties>
+			<rd:SecurityType>DataBase</rd:SecurityType>
+			<rd:DataSourceID>73a841b3-fa03-4757-94fc-8454c763b2c7</rd:DataSourceID>
+		</DataSource>
+	</DataSources>
+	<DataSets>
+		<DataSet Name="DataSet1">
+			<Query>
+				<DataSourceName>DataSource1</DataSourceName>
+				<QueryParameters>
+					<QueryParameter Name="CRM_snt_entity">
+						<Value>=Parameters!CRM_snt_entity.Value</Value>
+					</QueryParameter>
+				</QueryParameters>
+				<CommandText>
+					&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false" &gt;
+					&lt;entity name="snt_entity"  enableprefiltering="1"  &gt;
+					&lt;attribute name="snt_entityid" /&gt;
+					&lt;attribute name="snt_name" /&gt;    	&lt;order attribute='snt_name' descending="false" /&gt;
+
+					&lt;link-entity name="snt_entitynetassets" from="snt_entityid" to="snt_entityid"  alias='na' link-type='outer' count='2'&gt;
+					&lt;order attribute='snt_year' descending="true" /&gt;
+					&lt;attribute name='snt_year' /&gt;
+					&lt;attribute name='snt_networth' /&gt;
+					&lt;/link-entity&gt;
+					&lt;/entity&gt;
+					&lt;/fetch&gt;
+				</CommandText>
+				<rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+			</Query>
+			<Fields>
+				<Field Name="snt_entityid">
+					<DataField>snt_entityid</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="snt_name">
+					<DataField>snt_name</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="na_snt_year">
+					<DataField>na_snt_year</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="na_snt_yearValue">
+					<DataField>na_snt_yearValue</DataField>
+					<rd:TypeName>System.Int32</rd:TypeName>
+				</Field>
+				<Field Name="na_snt_networth">
+					<DataField>na_snt_networth</DataField>
+					<rd:UserDefined>true</rd:UserDefined>
+				</Field>
+				<Field Name="na_snt_networthValue">
+					<DataField>na_snt_networthValue</DataField>
+					<rd:UserDefined>true</rd:UserDefined>
+				</Field>
+			</Fields>
+			<Filters>
+				<Filter>
+					<FilterExpression>=Fields!na_snt_year.Value</FilterExpression>
+					<Operator>Equal</Operator>
+					<FilterValues>
+						<FilterValue>=Parameters!Year.Value</FilterValue>
+					</FilterValues>
+				</Filter>
+			</Filters>
+		</DataSet>
+	</DataSets>
+	<ReportParameters>
+		<ReportParameter Name="CRM_snt_entity">
+			<DataType>String</DataType>
+			<DefaultValue>
+				<Values>
+					<Value>&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;&lt;entity name="snt_entity"&gt;&lt;all-attributes /&gt;&lt;filter type="and"&gt;&lt;condition attribute="modifiedon" operator="last-x-days" value="30" /&gt;&lt;/filter&gt;&lt;/entity&gt;&lt;/fetch&gt;</Value>
+				</Values>
+			</DefaultValue>
+			<Prompt>CRM snt entity</Prompt>
+			<Hidden>true</Hidden>
+		</ReportParameter>
+		<ReportParameter Name="CRM_URL">
+			<DataType>String</DataType>
+			<Nullable>true</Nullable>
+			<AllowBlank>true</AllowBlank>
+			<Prompt>CRM_URL</Prompt>
+			<Hidden>true</Hidden>
+		</ReportParameter>
+		<ReportParameter Name="Level">
+			<DataType>String</DataType>
+			<DefaultValue>
+				<Values>
+					<Value>0</Value>
+				</Values>
+			</DefaultValue>
+			<Prompt>Level</Prompt>
+			<Hidden>true</Hidden>
+		</ReportParameter>
+		<ReportParameter Name="FactoredPercent">
+			<DataType>String</DataType>
+			<DefaultValue>
+				<Values>
+					<Value>0</Value>
+				</Values>
+			</DefaultValue>
+			<Prompt>FactoredPercent</Prompt>
+			<Hidden>true</Hidden>
+		</ReportParameter>
+		<ReportParameter Name="LevelLimit">
+			<DataType>Integer</DataType>
+			<DefaultValue>
+				<Values>
+					<Value>10</Value>
+				</Values>
+			</DefaultValue>
+			<Prompt>Level</Prompt>
+		</ReportParameter>
+		<ReportParameter Name="Year">
+			<DataType>String</DataType>
+			<Prompt>Year</Prompt>
+		</ReportParameter>
+	</ReportParameters>
+	<CustomProperties>
+		<CustomProperty>
+			<Name>Custom</Name>
+			<Value>&lt;MSCRM xmlns="mscrm"&gt;&amp;lt;ReportFilter&amp;gt;&amp;lt;ReportEntity paramname="CRM_snt_entity" donotconvert="1"&amp;gt;&amp;lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&amp;gt;&amp;lt;entity name="snt_entity"&amp;gt;&amp;lt;all-attributes /&amp;gt;&amp;lt;filter type="and"&amp;gt;&amp;lt;condition attribute="modifiedon" operator="last-x-days" value="30" /&amp;gt;&amp;lt;/filter&amp;gt;&amp;lt;/entity&amp;gt;&amp;lt;/fetch&amp;gt;&amp;lt;/ReportEntity&amp;gt;&amp;lt;/ReportFilter&amp;gt;&lt;/MSCRM&gt;</Value>
+		</CustomProperty>
+	</CustomProperties>
+	<Language>en-US</Language>
+	<ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+	<rd:ReportUnitType>Inch</rd:ReportUnitType>
+	<rd:ReportID>b6a2513e-8fe5-4508-9f17-5519ae9197c7</rd:ReportID>
+</Report>

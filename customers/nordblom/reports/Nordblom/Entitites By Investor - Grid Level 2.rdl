@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Properties">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>14.65302in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.26389in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Rectangle Name="Rectangle2">
+                      <ReportItems>
+                        <Textbox Name="snt_percentownership2">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!snt_name.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.00%</Format>
+                                    <Color>DarkBlue</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>snt_percentownership</rd:DefaultName>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Hyperlink>=IIF(IsNothing(Parameters!CRM_URL.Value), Nothing, Parameters!CRM_URL.Value &amp; "?ID={" &amp; Fields!snt_propertyid.Value.ToString() &amp; "}&amp;LogicalName=snt_property")</Hyperlink>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
+                          <Left>9.67736in</Left>
+                          <Height>0.25in</Height>
+                          <Width>2.42013in</Width>
+                          <ToolTip>Click to drill to Property</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox7">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=CDec(CStr(Parameters!Level.Value + 1) + "." + CStr(RowNumber("DataSet2")))</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>DarkBlue</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Height>0.25in</Height>
+                          <Width>0.46181in</Width>
+                          <ZIndex>1</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="snt_percentownership7">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!Investor.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.00%</Format>
+                                    <Color>DarkBlue</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>snt_percentownership</rd:DefaultName>
+                          <Left>0.46181in</Left>
+                          <Height>0.25in</Height>
+                          <Width>2.10417in</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="snt_percentownership18">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!pv_snt_valueValue.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                    <Color>DarkBlue</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>snt_percentownership</rd:DefaultName>
+                          <Left>12.09749in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.80555in</Width>
+                          <ZIndex>3</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="snt_percentownership19">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!pv_snt_debtValue.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                    <Color>DarkBlue</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>snt_percentownership</rd:DefaultName>
+                          <Left>12.90304in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.87499in</Width>
+                          <ZIndex>4</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="TotalPromote">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!pv_snt_totalpromoteamountValue.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                    <Color>DarkBlue</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>13.77803in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.87499in</Width>
+                          <ZIndex>5</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                      </ReportItems>
+                      <KeepTogether>true</KeepTogether>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <BackgroundColor>
+													=Switch(Parameters!Level.Value = 0, "Pink",
+													Parameters!Level.Value = 1, "LemonChiffon",
+													Parameters!Level.Value = 2, "Khaki",
+													Parameters!Level.Value = 3, "LightBlue",
+													Parameters!Level.Value = 4, "PaleGreen",
+													Parameters!Level.Value = 5, "Lavender",
+													Parameters!Level.Value = 6, "PaleVioletRed",
+													Parameters!Level.Value = 7, "LightGrey",
+													Parameters!Level.Value = 8, "Gold")
+												</BackgroundColor>
+                      </Style>
+                    </Rectangle>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details2" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DataSet2</DataSetName>
+        <Left>0.00007in</Left>
+        <Height>0.26389in</Height>
+        <Width>14.65302in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+      <Tablix Name="Entities">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>14.65309in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.5in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Rectangle Name="Rectangle1">
+                      <ReportItems>
+                        <Textbox Name="DirectPercent">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(isnothing(Fields!snt_percentownership.Value), 0, Fields!snt_percentownership.Value / 100)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.00000%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>2.56599in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.68748in</Width>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Textbox9">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=CDec(CStr(Parameters!Level.Value + 1) + "." + CStr(RowNumber("DataSet1")))</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Height>0.25in</Height>
+                          <Width>0.46181in</Width>
+                          <ZIndex>1</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="IndirectPercent">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=(CDec(Fields!snt_percentownership.Value)/100) * (CDec(Parameters!FactoredPercent.Value)/100)</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>0.00000%</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>3.25349in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.74652in</Width>
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="snt_entityinvestedid3">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Parameters!Investor.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>snt_entityinvestedid</rd:DefaultName>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Hyperlink>=IIF(IsNothing(Parameters!CRM_URL.Value), Nothing, Parameters!CRM_URL.Value &amp; "?ID={" &amp; Fields!snt_entityinvestedidValue.Value.ToString() &amp; "}&amp;LogicalName=snt_entity")</Hyperlink>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
+                          <Left>0.46181in</Left>
+                          <Height>0.25in</Height>
+                          <Width>2.10417in</Width>
+                          <ZIndex>3</ZIndex>
+                          <ToolTip>Click to drill to Entity</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="snt_entityinvestedid2">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!snt_entityinvestedid.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>snt_entityinvestedid</rd:DefaultName>
+                          <ActionInfo>
+                            <Actions>
+                              <Action>
+                                <Hyperlink>=IIF(IsNothing(Parameters!CRM_URL.Value), Nothing, Parameters!CRM_URL.Value &amp; "?ID={" &amp; Fields!snt_entityinvestedidValue.Value.ToString() &amp; "}&amp;LogicalName=snt_entity")</Hyperlink>
+                              </Action>
+                            </Actions>
+                          </ActionInfo>
+                          <Left>4.00001in</Left>
+                          <Height>0.25in</Height>
+                          <Width>2.31611in</Width>
+                          <ZIndex>4</ZIndex>
+                          <ToolTip>Click to drill to Entity</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="Equity">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!e_snt_networthValue.Value * ReportItems!IndirectPercent.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>7.12167in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.80555in</Width>
+                          <ZIndex>5</ZIndex>
+                          <ToolTip>="Owned directly by level above"</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="OtherAssets">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=iif(Not isnothing(Fields!e_snt_amount.Value) And Fields!e_snt_amountValue.Value &gt; 0, CStr(FormatCurrency(Fields!e_snt_amountValue.Value, 0)), "$0")</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>8.80222in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.86457in</Width>
+                          <ZIndex>6</ZIndex>
+                          <ToolTip>="Owned indirectly by level report run from"</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                        <Subreport Name="EntititesByInvestorGrid4">
+                          <ReportName>Entitites By Investor - Grid Level 3</ReportName>
+                          <Parameters>
+                            <Parameter Name="EntityID">
+                              <Value>=Fields!snt_entityinvestedidValue.Value</Value>
+                            </Parameter>
+                            <Parameter Name="CRM_URL">
+                              <Value>=Parameters!CRM_URL.Value</Value>
+                            </Parameter>
+                            <Parameter Name="Level">
+                              <Value>=Parameters!Level.Value+1</Value>
+                            </Parameter>
+                            <Parameter Name="FactoredPercent">
+                              <Value>=(CDec(Fields!snt_percentownership.Value) * CDec(Parameters!FactoredPercent.Value))/100</Value>
+                            </Parameter>
+                            <Parameter Name="Investor">
+                              <Value>=Fields!snt_entityinvestedid.Value</Value>
+                            </Parameter>
+                            <Parameter Name="Year">
+                              <Value>=Parameters!Year.Value</Value>
+                            </Parameter>
+                            <Parameter Name="LevelLimit">
+                              <Value>=Parameters!LevelLimit.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                          <Top>0.25in</Top>
+                          <Height>0.25in</Height>
+                          <Width>14.65287in</Width>
+                          <ZIndex>7</ZIndex>
+                          <Visibility>
+                            <Hidden>=Parameters!LevelLimit.Value = Parameters!Level.Value+1</Hidden>
+                          </Visibility>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                          </Style>
+                        </Subreport>
+                        <Textbox Name="Networth">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!e_snt_networthValue.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>7.92723in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.87499in</Width>
+                          <ZIndex>8</ZIndex>
+                          <ToolTip>="Owned indirectly by level report run from"</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                        <Textbox Name="IndirectEquity">
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!e_snt_networthValue.Value*ReportItems!DirectPercent.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Format>'$'#,0;('$'#,0)</Format>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <Left>6.31612in</Left>
+                          <Height>0.25in</Height>
+                          <Width>0.80555in</Width>
+                          <ZIndex>9</ZIndex>
+                          <ToolTip>="Owned directly by level above"</ToolTip>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
+                          </Style>
+                        </Textbox>
+                      </ReportItems>
+                      <KeepTogether>true</KeepTogether>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <BackgroundColor>
+													=Switch(Parameters!Level.Value = 0, "Pink",
+													Parameters!Level.Value = 1, "LemonChiffon",
+													Parameters!Level.Value = 2, "Khaki",
+													Parameters!Level.Value = 3, "LightBlue",
+													Parameters!Level.Value = 4, "PaleGreen",
+													Parameters!Level.Value = 5, "Lavender",
+													Parameters!Level.Value = 6, "PaleVioletRed",
+													Parameters!Level.Value = 7, "LightGrey",
+													Parameters!Level.Value = 8, "Gold")
+												</BackgroundColor>
+                      </Style>
+                    </Rectangle>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <Group Name="Details3" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DataSet1</DataSetName>
+        <Top>0.25in</Top>
+        <Height>0.5in</Height>
+        <Width>14.65309in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>0.75in</Height>
+    <Style />
+  </Body>
+  <Width>14.65309in</Width>
+  <Page>
+    <LeftMargin>1in</LeftMargin>
+    <RightMargin>1in</RightMargin>
+    <TopMargin>1in</TopMargin>
+    <BottomMargin>1in</BottomMargin>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource1">
+      <ConnectionProperties>
+        <DataProvider>MSCRMFETCH</DataProvider>
+        <ConnectString>https://nordblom.crm.dynamics.com</ConnectString>
+        <Prompt>Specify a user name and password for data source DataSource1:</Prompt>
+      </ConnectionProperties>
+      <rd:SecurityType>DataBase</rd:SecurityType>
+      <rd:DataSourceID>8a4abf2f-f71e-43b3-b173-0b86202b9bd7</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@EntityID">
+            <Value>=Parameters!EntityID.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="@Year">
+            <Value>=Parameters!Year.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>
+					&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+					&lt;entity name="snt_investment"  &gt;
+					&lt;order attribute="snt_entityinvestedid" descending="false" /&gt;
+					&lt;attribute name="snt_investmentid" /&gt;
+					&lt;attribute name="snt_entityinvestedid" /&gt;
+					&lt;attribute name="snt_entityid" /&gt;
+					&lt;attribute name="snt_percentownership" /&gt;
+					&lt;attribute name="snt_totaldistribution" /&gt;
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;condition attribute="snt_entityid" operator="eq" value="@EntityID" /&gt;&lt;/filter&gt;
+					&lt;link-entity name='snt_entitynetassets' to='snt_entityinvestedid' from='snt_entityid' link-type='outer' alias='e'&gt;
+					&lt;attribute name='snt_amount' /&gt;
+					&lt;attribute name='snt_year' /&gt;
+					&lt;attribute name='snt_networth' /&gt;
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="snt_year" operator="eq" value="@Year" /&gt;
+					&lt;/filter&gt;
+					&lt;/link-entity&gt;
+					&lt;/entity&gt;
+					&lt;/fetch&gt;
+				</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="snt_investmentid">
+          <DataField>snt_investmentid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_entityinvestedid">
+          <DataField>snt_entityinvestedid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_entityinvestedidValue">
+          <DataField>snt_entityinvestedidValue</DataField>
+          <rd:TypeName>System.Guid</rd:TypeName>
+        </Field>
+        <Field Name="snt_entityinvestedidEntityName">
+          <DataField>snt_entityinvestedidEntityName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_entityid">
+          <DataField>snt_entityid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_entityidValue">
+          <DataField>snt_entityidValue</DataField>
+          <rd:TypeName>System.Guid</rd:TypeName>
+        </Field>
+        <Field Name="snt_entityidEntityName">
+          <DataField>snt_entityidEntityName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_percentownership">
+          <DataField>snt_percentownership</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_percentownershipValue">
+          <DataField>snt_percentownershipValue</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="snt_totaldistribution">
+          <DataField>snt_totaldistribution</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="snt_totaldistributionValue">
+          <DataField>snt_totaldistributionValue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="e_snt_amount">
+          <DataField>e_snt_amount</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="e_snt_amountValue">
+          <DataField>e_snt_amountValue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="e_snt_year">
+          <DataField>e_snt_year</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="e_snt_yearValue">
+          <DataField>e_snt_yearValue</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="e_snt_networth">
+          <DataField>e_snt_networth</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+        <Field Name="e_snt_networthValue">
+          <DataField>e_snt_networthValue</DataField>
+          <rd:UserDefined>true</rd:UserDefined>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@EntityID">
+            <Value>=Parameters!EntityID.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="@Year">
+            <Value>=Parameters!Year.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>
+					&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;
+					&lt;entity name="snt_property"  &gt;
+					&lt;order attribute="snt_propertyid" descending="false" /&gt;
+					&lt;attribute name="snt_name" /&gt;
+					&lt;attribute name="snt_propertyid" /&gt;
+
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;condition attribute="snt_entityid" operator="eq" value="@EntityID" /&gt;
+					&lt;/filter&gt;
+					&lt;link-entity name='snt_propertyassessment' from='snt_propetyid' to='snt_propertyid'  link-type='outer' alias='pv'&gt;
+					&lt;attribute name='snt_name'  /&gt;
+					&lt;attribute name='snt_year'  /&gt;
+					&lt;attribute name='snt_value'  /&gt;
+					&lt;attribute name='snt_totalpromoteamount' /&gt;
+					&lt;attribute name='snt_debt'  /&gt;
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="snt_year" operator="eq" value="@Year" /&gt;
+					&lt;/filter&gt;
+					&lt;/link-entity&gt;
+					&lt;/entity&gt;
+					&lt;/fetch&gt;
+				</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="snt_name">
+          <DataField>snt_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_name">
+          <DataField>pv_snt_name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_year">
+          <DataField>pv_snt_year</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_yearValue">
+          <DataField>pv_snt_yearValue</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="snt_propertyid">
+          <DataField>snt_propertyid</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_value">
+          <DataField>pv_snt_value</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_valueValue">
+          <DataField>pv_snt_valueValue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_totalpromoteamount">
+          <DataField>pv_snt_totalpromoteamount</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_totalpromoteamountValue">
+          <DataField>pv_snt_totalpromoteamountValue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_debt">
+          <DataField>pv_snt_debt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pv_snt_debtValue">
+          <DataField>pv_snt_debtValue</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="EntityID">
+      <DataType>String</DataType>
+      <Prompt>EntityID</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Level">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Level</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="LevelLimit">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>100</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>LevelLimit</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Investor">
+      <DataType>String</DataType>
+      <Prompt>Investor</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="CRM_URL">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>CRM_URL</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="FactoredPercent">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>100</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>FactoredPercent</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="Year">
+      <DataType>String</DataType>
+      <Prompt>Year</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>59fd9e8e-5821-437f-866f-77301f91d755</rd:ReportID>
+</Report>

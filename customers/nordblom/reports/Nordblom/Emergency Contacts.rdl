@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+	<DataSources>
+		<DataSource Name="CRM">
+			<ConnectionProperties>
+				<DataProvider>MSCRMFETCH</DataProvider>
+				<ConnectString>https://nordblom.crm.dynamics.com</ConnectString>
+			</ConnectionProperties>
+			<rd:DataSourceID>c94383b7-3a8b-4412-8c9e-c882900fef24</rd:DataSourceID>
+		</DataSource>
+	</DataSources>
+	<DataSets>
+		<DataSet Name="DataSet1">
+			<Fields>
+				<Field Name="tenant">
+					<DataField>tenant</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="leaseid">
+					<DataField>leaseid</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="lease">
+					<DataField>lease</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="contactname">
+					<DataField>contactname</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="tenantid">
+					<DataField>tenantid</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="contactid">
+					<DataField>contactid</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="telephone1">
+					<DataField>telephone1</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="mobile">
+					<DataField>mobile</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="email">
+					<DataField>email</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="emergencyphone">
+					<DataField>emergencyphone</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+				<Field Name="location">
+					<DataField>location</DataField>
+					<rd:TypeName>System.String</rd:TypeName>
+				</Field>
+			</Fields>
+			<Query>
+				<DataSourceName>CRM</DataSourceName>
+				<CommandText>
+					&lt;fetch distinct='false' mapping='logical' &gt;
+					&lt;entity name='snt_property' enableprefiltering='1'&gt;
+
+					&lt;link-entity name='snt_lease' from='snt_propertyid' to='snt_propertyid'&gt;
+					&lt;attribute name="snt_leaseid" alias='leaseid' /&gt;
+					&lt;attribute name="snt_name" alias='lease' /&gt;
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;/filter&gt;
+
+					&lt;link-entity name='account' from='accountid' to='snt_accountid' &gt;
+
+					&lt;attribute name="accountid" alias='tenantid' /&gt;
+					&lt;attribute name="name" alias='tenant' /&gt;
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;/filter&gt;
+					&lt;link-entity name='contact' from='accountid' to='accountid' &gt;
+					&lt;attribute name="contactid" alias='contactid' /&gt;
+					&lt;attribute name="fullname" alias='contactname' /&gt;
+					&lt;attribute name="telephone1"  alias='telephone1'/&gt;
+					&lt;attribute name="mobilephone"  alias='mobile'/&gt;
+					&lt;attribute name="address2_telephone2"  alias='emergencyphone'/&gt;
+					&lt;attribute name="snt_emergencycontactlocation"  alias='location'/&gt;
+					&lt;attribute name="emailaddress1"  alias='email'/&gt;
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;condition attribute="snt_emergencycontact" operator="eq" value="1" /&gt;
+					&lt;/filter&gt;
+					&lt;order attribute="fullname" descending="false" /&gt;
+
+					&lt;/link-entity&gt;
+					&lt;order attribute="name" descending="false" /&gt;
+					&lt;/link-entity&gt;
+					&lt;/link-entity&gt;
+
+
+					&lt;filter type="and"&gt;
+					&lt;condition attribute="statecode" operator="eq" value="0" /&gt;
+					&lt;/filter&gt;
+
+					&lt;/entity&gt;
+					&lt;/fetch&gt;
+				</CommandText>
+				<QueryParameters>
+					<QueryParameter Name="CRM_snt_property">
+						<Value>=Parameters!CRM_snt_property.Value</Value>
+					</QueryParameter>
+				</QueryParameters>
+				<rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+			</Query>
+		</DataSet>
+	</DataSets>
+	<Body>
+		<ReportItems>
+			<Tablix Name="table1">
+				<TablixBody>
+					<TablixColumns>
+						<TablixColumn>
+							<Width>2.40625in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>2.16667in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>1in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>1.52083in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>1.32292in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>1.19792in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>1.22917in</Width>
+						</TablixColumn>
+						<TablixColumn>
+							<Width>1.94792in</Width>
+						</TablixColumn>
+					</TablixColumns>
+					<TablixRows>
+						<TablixRow>
+							<Height>0.22in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="textbox2">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Tenant</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>textbox2</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="textbox3">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Contact</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>textbox3</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox3">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Lease</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox3</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox10">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Location</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox10</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox1">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Emergency Phone</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox1</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox2">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Business Phone</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox2</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox4">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Cell</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox4</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="Textbox6">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>Email</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+																<FontWeight>Bold</FontWeight>
+																<Color>White</Color>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>Textbox6</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<BackgroundColor>SteelBlue</BackgroundColor>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+						<TablixRow>
+							<Height>0.21in</Height>
+							<TablixCells>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="tenant">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!tenant.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>tenant</rd:DefaultName>
+											<ActionInfo>
+												<Actions>
+													<Action>
+														<Hyperlink>=IIF(IsNothing(Parameters!CRM_URL.Value),Nothing,Parameters!CRM_URL.Value &amp; "?ID={"&amp;Fields!tenantid.Value.ToString()&amp;"}&amp;LogicalName=account")</Hyperlink>
+													</Action>
+												</Actions>
+											</ActionInfo>
+											<ToolTip>Click to drill to Tenant</ToolTip>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="contactname">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!contactname.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>contactname</rd:DefaultName>
+											<ActionInfo>
+												<Actions>
+													<Action>
+														<Hyperlink>=IIF(IsNothing(Parameters!CRM_URL.Value),Nothing,Parameters!CRM_URL.Value &amp; "?ID={"&amp;Fields!contactid.Value.ToString()&amp;"}&amp;LogicalName=contact")</Hyperlink>
+													</Action>
+												</Actions>
+											</ActionInfo>
+											<ToolTip>Click to drill to Contact</ToolTip>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="lease">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!lease.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>lease</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+										<rd:Selected>true</rd:Selected>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="location">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!location.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>location</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="emergencyphone">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!emergencyphone.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>emergencyphone</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="telephone1">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!telephone1.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>telephone1</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="mobile">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!mobile.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>mobile</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+								<TablixCell>
+									<CellContents>
+										<Textbox Name="email">
+											<CanGrow>true</CanGrow>
+											<KeepTogether>true</KeepTogether>
+											<Paragraphs>
+												<Paragraph>
+													<TextRuns>
+														<TextRun>
+															<Value>=Fields!email.Value</Value>
+															<Style>
+																<FontFamily>Tahoma</FontFamily>
+															</Style>
+														</TextRun>
+													</TextRuns>
+													<Style />
+												</Paragraph>
+											</Paragraphs>
+											<rd:DefaultName>email</rd:DefaultName>
+											<Style>
+												<Border>
+													<Color>LightGrey</Color>
+													<Style>Solid</Style>
+												</Border>
+												<PaddingLeft>2pt</PaddingLeft>
+												<PaddingRight>2pt</PaddingRight>
+												<PaddingTop>2pt</PaddingTop>
+												<PaddingBottom>2pt</PaddingBottom>
+											</Style>
+										</Textbox>
+									</CellContents>
+								</TablixCell>
+							</TablixCells>
+						</TablixRow>
+					</TablixRows>
+				</TablixBody>
+				<TablixColumnHierarchy>
+					<TablixMembers>
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+						<TablixMember />
+					</TablixMembers>
+				</TablixColumnHierarchy>
+				<TablixRowHierarchy>
+					<TablixMembers>
+						<TablixMember>
+							<KeepWithGroup>After</KeepWithGroup>
+							<RepeatOnNewPage>true</RepeatOnNewPage>
+							<KeepTogether>true</KeepTogether>
+						</TablixMember>
+						<TablixMember>
+							<Group Name="table1_Details_Group">
+								<DataElementName>Detail</DataElementName>
+							</Group>
+							<TablixMembers>
+								<TablixMember />
+							</TablixMembers>
+							<DataElementName>Detail_Collection</DataElementName>
+							<DataElementOutput>Output</DataElementOutput>
+							<KeepTogether>true</KeepTogether>
+						</TablixMember>
+					</TablixMembers>
+				</TablixRowHierarchy>
+				<DataSetName>DataSet1</DataSetName>
+				<Top>0.36in</Top>
+				<Height>0.43in</Height>
+				<Width>12.79168in</Width>
+				<Style />
+			</Tablix>
+			<Textbox Name="textbox1">
+				<CanGrow>true</CanGrow>
+				<KeepTogether>true</KeepTogether>
+				<Paragraphs>
+					<Paragraph>
+						<TextRuns>
+							<TextRun>
+								<Value>Emergency Contacts</Value>
+								<Style>
+									<FontFamily>Tahoma</FontFamily>
+									<FontSize>16pt</FontSize>
+									<FontWeight>Bold</FontWeight>
+									<Color>SteelBlue</Color>
+								</Style>
+							</TextRun>
+						</TextRuns>
+						<Style />
+					</Paragraph>
+				</Paragraphs>
+				<rd:DefaultName>textbox1</rd:DefaultName>
+				<Height>0.36in</Height>
+				<Width>11.72918in</Width>
+				<ZIndex>1</ZIndex>
+				<Style>
+					<PaddingLeft>2pt</PaddingLeft>
+					<PaddingRight>2pt</PaddingRight>
+					<PaddingTop>2pt</PaddingTop>
+					<PaddingBottom>2pt</PaddingBottom>
+				</Style>
+			</Textbox>
+		</ReportItems>
+		<Height>0.79in</Height>
+		<Style />
+	</Body>
+	<ReportParameters>
+		<ReportParameter Name="CRM_snt_property">
+			<DataType>String</DataType>
+			<DefaultValue>
+				<Values>
+					<Value>&lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&gt;&lt;entity name="snt_property"&gt;&lt;all-attributes /&gt;&lt;/entity&gt;&lt;/fetch&gt;</Value>
+				</Values>
+			</DefaultValue>
+			<Prompt>CRM snt property</Prompt>
+			<Hidden>true</Hidden>
+		</ReportParameter>
+		<ReportParameter Name="CRM_URL">
+			<DataType>String</DataType>
+			<Nullable>true</Nullable>
+			<Prompt>CRM_URL</Prompt>
+			<Hidden>true</Hidden>
+		</ReportParameter>
+	</ReportParameters>
+	<CustomProperties>
+		<CustomProperty>
+			<Name>Custom</Name>
+			<Value>&lt;MSCRM xmlns="mscrm"&gt;&amp;lt;ReportFilter&amp;gt;&amp;lt;ReportEntity paramname="CRM_snt_property" donotconvert="1"&amp;gt;&amp;lt;fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false"&amp;gt;&amp;lt;entity name="snt_property"&amp;gt;&amp;lt;all-attributes /&amp;gt;&amp;lt;/entity&amp;gt;&amp;lt;/fetch&amp;gt;&amp;lt;/ReportEntity&amp;gt;&amp;lt;/ReportFilter&amp;gt;&lt;/MSCRM&gt;</Value>
+		</CustomProperty>
+	</CustomProperties>
+	<Width>13.0521in</Width>
+	<Page>
+		<LeftMargin>1in</LeftMargin>
+		<RightMargin>1in</RightMargin>
+		<TopMargin>1in</TopMargin>
+		<BottomMargin>1in</BottomMargin>
+		<Style />
+	</Page>
+	<Language>en-US</Language>
+	<ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+	<rd:ReportID>80423bb2-4aa4-4067-9010-ca6eca77c438</rd:ReportID>
+	<rd:ReportUnitType>Inch</rd:ReportUnitType>
+</Report>
