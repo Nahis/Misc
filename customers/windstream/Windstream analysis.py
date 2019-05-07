@@ -25,9 +25,9 @@ def iterate_bucket_items(prefix):
             yield item
 
 def insert_db(prefix):
-    sql = "INSERT INTO scratch.windstream_events(id, type, time, user_id, changes, resource_id, change_remedy_status, change_activity_workskills, " \
+    sql = "INSERT INTO scratch.windstream_events(id, type, time, user_id, changes, details, resource_id, change_remedy_status, change_activity_workskills, " \
           "status, subscription, change_resource_id, change_time, s3_key, remedy_number, payload)" \
-          " VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+          " VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
 
     s3 = boto3.resource('s3')
@@ -43,6 +43,7 @@ def insert_db(prefix):
                         event_type = r['eventType']
                         recId = None
                         changes = None
+                        details = None
                         resourceId = None
                         chg_remedy_status = None
                         chg_activity_workskills = None
@@ -59,6 +60,7 @@ def insert_db(prefix):
                                     status = r['activityChanges']['status'] if 'status' in r['activityChanges'] else None
                                     chg_remedy_status = r['activityChanges']['XA_REMEDY_ACTIVITY_STATUS'] if 'XA_REMEDY_ACTIVITY_STATUS' in r['activityChanges'] else None
                                     changes = json.dumps(r['activityChanges'] if 'activityChanges' in r else None)
+                                    details = json.dumps(r['activityDetails'] if 'activityDetails' in r else None)
                                     chg_activity_workskills = r['activityChanges']['XA_activity_workskills_dup'] if 'XA_activity_workskills_dup' in r['activityChanges'] else None
                                     chg_resource_id = r['activityChanges']['resourceId'] if 'resourceId' in r['activityChanges'] else None
                                     chg_date = r['activityChanges']['date'] if 'date' in r['activityChanges'] else None
@@ -77,7 +79,7 @@ def insert_db(prefix):
 
                             if resourceId[0:1] == "e":
                                 try:
-                                    row = [recId, event_type, r['time'], r['user'], changes, resourceId, chg_remedy_status,
+                                    row = [recId, event_type, r['time'], r['user'], changes, details, resourceId, chg_remedy_status,
                                            chg_activity_workskills, status, subscription, chg_resource_id, chg_date,
                                            i['Key'], remedy_number, payload]
                                     insert_values.append(row)
