@@ -11,6 +11,8 @@ BUCKET = 'connector-hub-in-arch-sbx'
 CONN_STR = ""
 conn = psycopg2.connect(CONN_STR)
 cur = conn.cursor()
+SQL = "INSERT INTO scratch.archive_analysis(entity, id, payload, s3_key)" \
+      " VALUES(%s, %s, %s, %s)"
 
 def daterange(date1, date2):
     for n in range(int ((date2 - date1).days)+1):
@@ -26,9 +28,6 @@ def iterate_bucket_items(prefix):
             yield item
 
 def insert_db(prefix):
-    sql = "INSERT INTO scratch.archive_analysis(entity, id, payload, s3_key)" \
-          " VALUES(%s, %s, %s, %s)"
-
     s3 = boto3.resource('s3')
     for i in iterate_bucket_items(prefix=prefix):
         insert_values = []
@@ -41,7 +40,7 @@ def insert_db(prefix):
             except:
                 pass
         try:
-            cur.executemany(sql, insert_values)
+            cur.executemany(SQL, insert_values)
             conn.commit()
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
