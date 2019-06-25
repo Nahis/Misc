@@ -27,12 +27,12 @@ payload = r"""
             "version": "v3"
         },
         "record":{
-            "external_organization_id": "<your_company_name>",
-            "title": "<some title - give a decent name for identifying>",
+            "external_organization_id": "your_company_name",
+            "title": "some title - give a decent name for identifying",
             "source": "web",
             "status": "offered",
             "description": "some description",
-            "external_ids": ["<some_unique_id>"],
+            "external_ids": ["some_unique_id"],
             "address":{
                 "postal_code": "01235",
                 "city": "Boston",
@@ -44,7 +44,7 @@ payload = r"""
             "customer": {
                 "first_name": "Jason",
                 "last_name": "Davis",
-                "external_id": "<some_unique_customer_id>",
+                "external_id": "some_unique_customer_id",
                 "email": "devs+jasondavis@dispatch.me",
                 "home_address": {
                         "street_1": "71601 Ford Street",
