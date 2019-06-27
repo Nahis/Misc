@@ -2,6 +2,12 @@
 */.idea/
 /debug
 /bin
-/customers/nordblom/reports/*/bin
 *.data
 *.user
+
+/customers/*/reports/*/bin
+/customers/*/reports/*.sln
+/customers/*/reports/*/*.data
+/customers/*/reports/*/*.user
+/customers/nordblom/reports/Nordblom.suo
+ 
